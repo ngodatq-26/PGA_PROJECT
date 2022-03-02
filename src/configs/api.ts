@@ -1,13 +1,13 @@
 import { APIHost } from '../utils/constants';
 
 enum APIService {
-  auth,
+  authentication,
   protected,
   public,
 }
 
 function getBaseUrl(service: APIService) {
-  if (service === APIService.auth) {
+  if (service === APIService.authentication) {
     return `${APIHost}/authentication`;
   } else if (service === APIService.protected) {
     return `${APIHost}/protected`;
@@ -19,6 +19,6 @@ function getBaseUrl(service: APIService) {
 }
 
 export const API_PATHS = {
-  signIn: `${getBaseUrl(APIService.auth)}/login`,
+  signIn: `https://api.gearfocus.div4.pgtest.co//api/authentication/login`,
   userProfile: `${getBaseUrl(APIService.public)}/user`,
 };

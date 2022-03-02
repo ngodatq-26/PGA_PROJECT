@@ -39,7 +39,6 @@ const LoginForm = (props: Props) => {
       },
    });
 
-   console.log(formik.values.email,formik.values.password);
   return (
          <form onSubmit={formik.handleSubmit} 
          className="card-header loginform" 

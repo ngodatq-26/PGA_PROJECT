@@ -32,8 +32,11 @@ const LoginPage = () => {
 
       setLoading(false);
 
-      if (json?.success === true) {
-        dispatch(replace(ROUTES.home));
+      if(json.success === true) {
+
+        Cookies.set(ACCESS_TOKEN_KEY, json.user_cookie, { expires: 7 });
+        dispatch(setUserInfo(json?.user));
+        dispatch(replace(ROUTES.products));
         return;
       }
 
@@ -41,7 +44,6 @@ const LoginPage = () => {
     },
     [dispatch],
   );
-  console.log(API_PATHS.signIn)
   return (
     <div
       className="container"

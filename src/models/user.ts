@@ -5,15 +5,11 @@ export interface AuthToken {
 }
 
 export interface IUser {
-  id: number;
-  email: string;
-  name: string;
-  gender: string;
-  avatar: string;
-  region: number;
-  state: number;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  token: string;
+  profile_id : number,
+  login : string,
+  firstName : string,
+  lastName : string,
+  dateOfLoginAttempts : number,
+  countOfLoginAttempts : number,
+  forceChangePassword : number,
 }
