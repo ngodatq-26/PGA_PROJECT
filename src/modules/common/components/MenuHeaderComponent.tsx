@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {memo} from 'react'
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -10,8 +11,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -20,9 +19,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import { ListItemButton } from '@mui/material';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const drawerWidth = 240;
 
+//code library material UI sidebar
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -30,6 +31,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  backgroundColor :'#323259',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -38,6 +40,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
+  backgroundColor :'#323259',
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(9)} + 1px)`,
@@ -64,7 +67,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% )`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -78,6 +81,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    backgroundColor :'#323259',
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -93,27 +97,21 @@ const MenuHeaderComponent = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{backgroundColor :'#323259'}} >
+      
+      {/* appbar header web*/}
+      <AppBar position="fixed" open={open} sx={{backgroundColor :'#323259',height:'80px'}} className="appbar" >
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() =>{
+                setOpen(!open)
+            }}
             edge="start"
             sx={{
               marginRight: '36px',
-              ...(open && { display: 'none' }),
             }}
           >
             <MenuIcon />
@@ -123,25 +121,25 @@ const MenuHeaderComponent = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{backgroundColor :'#323259'}} >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
+  
+       {/*sidebar and list icon item, : products,users*/}
+      <Drawer variant="permanent" open={open}>
         <Divider />
-        <List sx ={{ margin : '10px' }}>
+        <List sx ={{ marginTop : '80px' }}  >
             <ListItem button>
                 <ListItemIcon>
-                    <ProductionQuantityLimitsIcon />
+                    <ProductionQuantityLimitsIcon sx={{color : 'white'}} />
                 </ListItemIcon>
                 <ListItemText primary="Products" />
+                < ArrowDropDownIcon sx={{color : 'white'}}/>
             </ListItem>
+            <Divider />
             <ListItem button>
                 <ListItemIcon>
-                    <AssignmentIndIcon />
+                    <AssignmentIndIcon sx={{color : 'white'}} />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
+                < ArrowDropDownIcon sx={{color : 'white'}}/>
             </ListItem>
         </List>
       </Drawer>
@@ -151,4 +149,4 @@ const MenuHeaderComponent = () => {
   );
 }
 
-export default MenuHeaderComponent;
+export default React.memo(MenuHeaderComponent);
