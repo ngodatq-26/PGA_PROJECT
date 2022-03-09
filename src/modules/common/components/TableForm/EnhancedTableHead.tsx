@@ -1,6 +1,8 @@
 import React from 'react';
 import { TableHead,TableRow,TableCell,Checkbox } from '@mui/material';
 import {HeadCell} from '../../../../models/common';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 interface PropTableHead {
     HeadCells : HeadCell[];
@@ -18,8 +20,8 @@ const EnhancedTableHead  = (propTableHead : PropTableHead) =>{
                         />
                     </TableCell>
                     {
-                        HeadCells.map((HeadCell) =>(
-                            <TableCell key ={HeadCell.id}><a style={{color : 'white',fontSize : '15px'}}>{HeadCell.label}</a></TableCell>
+                        HeadCells.map((HeadCell,index : number) =>(
+                            <TableCell key ={index} ><a style={{color : 'white',fontSize : '15px'}}>{HeadCell.label}</a></TableCell>
                         ))
                     }
                 </TableRow>
@@ -28,4 +30,5 @@ const EnhancedTableHead  = (propTableHead : PropTableHead) =>{
     )
 }
 
-export default EnhancedTableHead;
+
+export default React.memo(EnhancedTableHead);
