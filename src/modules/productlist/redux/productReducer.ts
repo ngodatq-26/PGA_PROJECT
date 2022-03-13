@@ -7,7 +7,7 @@ export interface ProductState {
     apigetproduct : ApiProductList,
 }
 
-const initProductState : ProductState ={
+export const initProductState : ProductState ={
     apigetproduct : {
         page : 1,
         count:25,
@@ -25,23 +25,30 @@ export const setProductAction = createCustomAction('productlist/setProductAction
     data,
 }));
 
-export const setApiGetProduct = createCustomAction('apigetproduct/setApiGetProduct',(data : ApiProductList) =>(
-    {
+export const setApiGetProduct = createCustomAction('apigetproduct/setApiGetProduct',(data : ApiProductList) =>({
         data,
-    }
-) )
+}))
 
-export const setApiPageProduct = createCustomAction('apigetproduct/setApiPageProduct',(data : number) =>(
-    {
+export const setApiPageProduct = createCustomAction('apigetproduct/setApiPageProduct',(data : number) =>({
         data
-    }
-))
+}))
 
 export const setApiCountProduct = createCustomAction('apigetproduct/setApiCountProduct',(data : number) =>({
     data,
 }))
 
-const actions = {setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct} ;
+export const setApiSortProduct = createCustomAction('apigetproduct/setApiSortProduct',(sortName : string,orderBy : string) =>({
+    orderBy,sortName
+}))
+
+export const setSearchApiProduct = createCustomAction('apigetproduct/setSeacrchApiProduct',(
+    
+
+) =>({
+
+}))
+
+const actions = {setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
 
 type Action = ActionType<typeof actions>;
 
@@ -54,7 +61,9 @@ export default function reducer (state : ProductState = initProductState ,action
         case getType(setApiPageProduct) :
             return ({...state, apigetproduct : {...state.apigetproduct,page : action.data}});
         case getType(setApiCountProduct) :
-            return ({...state,apigetproduct : {...state.apigetproduct,count : action.data}})
+            return ({...state,apigetproduct : {...state.apigetproduct,count : action.data}});
+        case getType(setApiSortProduct) :
+            return ({...state,apigetproduct : {...state.apigetproduct,sort : action.sortName ,order_by : action.orderBy}});
         default :
             return state;
     }

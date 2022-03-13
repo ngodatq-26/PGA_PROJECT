@@ -15,7 +15,10 @@ import { IProduct } from '../../../models/product';
 import {ApiProductList} from '../../../models/product'
 import { useSelector } from 'react-redux';
 import TableRowProductComponent from '../components/TableRowProductComponent';
-
+import { headCells } from '../utils';
+import initProductState from '../redux/productReducer';
+import SearchFormComponent from '../components/SeacrhFormComponent';
+import { Button } from '@mui/material';
 
 const ProductListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
@@ -34,69 +37,20 @@ const ProductListPage = () =>{
     },[Redux_ApiGetProduct]);
 
     console.log(Redux_ApiGetProduct);
-    const headCells: HeadCell[] = [
-        {
-          id: 'name',
-          numeric: false,
-          disablePadding: true,
-          label: '',
-        },
-        {
-            id: 'sku',
-            numeric: true,
-            disablePadding: false,
-            label: 'SKU',
-        },
-        {
-            id: 'name',
-            numeric: true,
-            disablePadding: false,
-            label: 'Name',
-        },
-        {
-            id: 'category',
-            numeric: false,
-            disablePadding: false,
-            label: 'Category',
-        },
-        {
-            id : 'price',
-            numeric : true,
-            disablePadding : false,
-            label: 'Price',
-        },
-        {
-            id:'amount',
-            numeric : true,
-            disablePadding : false,
-            label :'In Stock'
-        },
-        {
-            id :'vendor',
-            numeric :false,
-            disablePadding : false,
-            label:'Vendor'
-        },
-        {
-            id:'arrivalDate',
-            numeric : true,
-            disablePadding : false,
-            label:'Arrival Date'
-        },
-        {
-            id : 'id',
-            numeric : false,
-            disablePadding : false,
-            label :"Delete"
-        },
-    ];
+    
 
     return (
         <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
             
             <MenuHeaderComponent />
             <div style ={{marginTop :'80px'}}>
-
+              <div style={{color : 'white'}}>
+                  Products
+              </div>
+              <SearchFormComponent />
+              <div style={{marginBottom : '30px'}}>
+                <Button variant='contained'>Add Product</Button>
+              </div>
               <TableProductComponent Data = {data} HeadCells ={headCells} />
             </div>
         </div>

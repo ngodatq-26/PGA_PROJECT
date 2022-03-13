@@ -22,7 +22,7 @@ export interface ApiProductList {
     search : string | null,
     category : number,
     stock_status : string,
-    availability : string,
+    availability : string | number,
     vendor : string,
     sort : string,
     order_by : string,

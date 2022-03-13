@@ -18,11 +18,18 @@ const TableRowProductComponent = (propTableRow : PropTableRow) =>{
                         /></TableCell>
                 <TableCell></TableCell>
                 <TableCell align="left">{product?.sku}</TableCell>
-                <TableCell align="left">{product?.name}</TableCell>
+                <TableCell align="left"
+                           sx ={{
+                            color: '#007bff!important',
+                            cursor: 'pointer'
+                }}><a style={{cursor: 'pointer'}}>{product?.name}</a></TableCell>
                 <TableCell align="left">{product?.category}</TableCell>
                 <TableCell align="left">{formatter.format(product.price) }</TableCell>
                 <TableCell align="left">{product.amount}</TableCell>
-                <TableCell align="left">{product.vendor}</TableCell>
+                <TableCell align="left" sx ={{
+                            color: '#007bff!important',
+                            cursor: 'pointer'
+                }}>{product.vendor}</TableCell>
                 <TableCell align="left">{TimeConvert(product.arrivalDate)}</TableCell>
                 <TableCell align="left"><Button variant="contained" href="#contained-buttons">{}<DeleteIcon sx={{color : 'white'}} /></Button></TableCell>
             </TableRow>

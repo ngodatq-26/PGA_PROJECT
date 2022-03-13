@@ -6,3 +6,8 @@ export interface HeadCell {
     label : string,
     numeric : boolean,
 }
+
+export interface Search {
+    label : string,
+    value : string|number,
+}

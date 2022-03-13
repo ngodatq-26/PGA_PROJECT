@@ -7,7 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { HeadCell } from '../../../models/common';
 import { ApiProductList, IProduct } from '../../../models/product';
 import { AppState } from '../../../redux/reducer';
-import { setApiCountProduct, setApiGetProduct, setApiPageProduct } from '../redux/productReducer';
+import { setApiCountProduct, setApiGetProduct, setApiPageProduct, setApiSortProduct } from '../redux/productReducer';
 import EnhancedTableHead from '../../common/components/TableForm/EnhancedTableHead';
 import PaginationComponent from '../../common/components/TableForm/PaginationComponent';
 import TableRowProductComponent from './TableRowProductComponent';
@@ -23,12 +23,17 @@ const TableForm = (propFormTable : PropFormTable) =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
 
+    const [sortName,setSortName] = useState('name');
+    const [orderBy,setOrderBy] = useState('ASC');
     const [page,setPage] = useState(1);
     const [rowPerPage,setRowPerPage] = useState(Redux_ApiGetProduct.count); 
 
     useEffect(()=>{
-        dispatch(setApiPageProduct(page));
-        
+        dispatch(setApiSortProduct(sortName,orderBy));
+    },[sortName,orderBy])
+
+    useEffect(()=>{
+        dispatch(setApiPageProduct(page));    
     },[page])
 
     useEffect(() =>{
@@ -41,7 +46,7 @@ const TableForm = (propFormTable : PropFormTable) =>{
           <Paper sx={{ width: '100%', mb: 2 }}>
             <TableContainer sx={{backgroundColor : '#323259'}}>
                 <Table sx={{minwidth : 750}}>
-                     <EnhancedTableHead HeadCells={HeadCells} />
+                     <EnhancedTableHead HeadCells={HeadCells} sortName={sortName} setSortName ={setSortName} orderBy={orderBy} setOrderBy={setOrderBy} />
                      <TableBody>
                          {
                              Data?.map((e,index : number) =>{
@@ -55,7 +60,13 @@ const TableForm = (propFormTable : PropFormTable) =>{
             </TableContainer>
           </Paper>
         </Box>
-        <PaginationComponent currentPage={page} setCurrentPage ={setPage} lengthPage = {5} rowPerPage ={rowPerPage} setRowPerPage={setRowPerPage} />
+        <PaginationComponent 
+        currentPage={page} 
+        setCurrentPage ={setPage} 
+        lengthPage = {5} 
+        rowPerPage ={rowPerPage} 
+        setRowPerPage={setRowPerPage}
+        />
         </div>
     )
 }
