@@ -20,11 +20,20 @@ export interface ApiProductList {
     page : number,
     count : number,
     search : string | null,
-    category : number,
+    category : string,
     stock_status : string,
-    availability : string | number,
-    vendor : string,
+    availability : string ,
+    vendor : string | null,
     sort : string,
     order_by : string,
     search_type : string | null
+}
+
+export interface IApiSearchProduct {
+    avaibility : string ,
+    category : string,
+    search : string | null,
+    search_type : string | null,
+    stock_status : string ,
+    vendor : string | null
 }

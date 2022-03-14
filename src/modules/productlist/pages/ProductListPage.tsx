@@ -4,14 +4,11 @@ import {useDispatch} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {Action} from "redux";
 import {AppState} from "../../../redux/reducer";
-import {setApiGetProduct, setProductAction,setApiPageProduct} from "../redux/productReducer";
+import {setApiGetProduct, setProductAction,setApiPageProduct, setApiSearchProduct} from "../redux/productReducer";
 import { fetchThunk } from '../../common/redux/thunk';
 import { API_PATHS } from '../../../configs/api';
-import EnhancedTableHead from '../../common/components/TableForm/EnhancedTableHead';
-import { HeadCell } from '../../../models/common';
-import PaginationComponent from '../../common/components/TableForm/PaginationComponent';
 import TableProductComponent from '../components/TableProductComponent';
-import { IProduct } from '../../../models/product';
+import { IProduct,IApiSearchProduct } from '../../../models/product';
 import {ApiProductList} from '../../../models/product'
 import { useSelector } from 'react-redux';
 import TableRowProductComponent from '../components/TableRowProductComponent';
@@ -26,18 +23,29 @@ const ProductListPage = () =>{
 
     const [data,setData] = useState<Array<IProduct>>([]);
 
-    const fetchData = useCallback(async () =>{
-         const json = await dispatch(fetchThunk(API_PATHS.productList,'post',Redux_ApiGetProduct));
+    const fetchData = useCallback(async (e : ApiProductList) =>{
+         const json = await dispatch(fetchThunk(API_PATHS.productList,'post',e));
+         if(json.data === false) {
+            setData([]);
+        } else {
          dispatch(setProductAction(json.data))
          setData(json.data);
-    },[Redux_ApiGetProduct]);
+        }
+    },[]);
 
-    useEffect (() =>{
-        fetchData();
-    },[Redux_ApiGetProduct]);
+    const fetchBegin = useCallback(async () =>{
+        const json = await dispatch(fetchThunk(API_PATHS.productList,'post',initProductState));
+        if(json.data === false) {
+           setData([]);
+       } else {
+        dispatch(setProductAction(json.data))
+        setData(json.data);
+       }
+   },[]);
 
-    console.log(Redux_ApiGetProduct);
-    
+   useEffect (() =>{
+       fetchBegin();
+   },[]);
 
     return (
         <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
@@ -47,11 +55,11 @@ const ProductListPage = () =>{
               <div style={{color : 'white'}}>
                   Products
               </div>
-              <SearchFormComponent />
+              <SearchFormComponent fetchData = {fetchData} />
               <div style={{marginBottom : '30px'}}>
-                <Button variant='contained'>Add Product</Button>
+                <Button variant='contained' href='/pages/products/new-product'>Add Product</Button>
               </div>
-              <TableProductComponent Data = {data} HeadCells ={headCells} />
+              <TableProductComponent Data = {data} HeadCells ={headCells} fetchData = {fetchData}/>
             </div>
         </div>
     )

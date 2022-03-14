@@ -1,6 +1,12 @@
 import React from 'react';
 import { Stack,Pagination, Button, NativeSelect, MenuItem } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppState } from '../../../redux/reducer';
+import { Action } from 'redux';
+import { setApiPageProduct } from '../redux/productReducer';
+
 interface PropPagination {
     currentPage : number,
     setCurrentPage(page : number) : void,
@@ -10,6 +16,8 @@ interface PropPagination {
 }
 
 const PaginationComponent = (propPagination : PropPagination) =>{
+    const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
+    const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
 
     const {currentPage,setCurrentPage,lengthPage,rowPerPage,setRowPerPage} = propPagination;
 
@@ -20,7 +28,7 @@ const PaginationComponent = (propPagination : PropPagination) =>{
 
     const handleNextPage =() =>{
         if(currentPage < lengthPage) {
-        setCurrentPage(currentPage + 1)
+        setCurrentPage(currentPage + 1);
         }
     }
 
@@ -33,6 +41,8 @@ const PaginationComponent = (propPagination : PropPagination) =>{
     const clickPage = (event: React.ChangeEvent<unknown>,page : number) =>{
         setCurrentPage(page);
     }
+
+   
 
     return (
             <Stack sx={{display : 'flex' ,flexDirection : 'row'}}>

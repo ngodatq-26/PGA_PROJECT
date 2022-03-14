@@ -1,8 +1,12 @@
 import React from 'react';
 import { TableHead,TableRow,TableCell,Checkbox,TableSortLabel } from '@mui/material';
-import {HeadCell} from '../../../../models/common';
+import {HeadCell} from '../../../models/common';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppState } from '../../../redux/reducer';
+import { Action } from 'redux';
 
 interface PropTableHead {
     HeadCells : HeadCell[];
@@ -13,6 +17,9 @@ interface PropTableHead {
 }
 
 const EnhancedTableHead  = (propTableHead : PropTableHead) =>{
+    const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
+    const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
+    
     const {HeadCells} = propTableHead;
 
     return (

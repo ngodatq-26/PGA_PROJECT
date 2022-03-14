@@ -1,4 +1,4 @@
-import {IProduct} from "../../../models/product";
+import {IApiSearchProduct, IProduct} from "../../../models/product";
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
 import { ApiProductList } from "../../../models/product";
 
@@ -12,7 +12,7 @@ export const initProductState : ProductState ={
         page : 1,
         count:25,
         search:"",
-        category:0,
+        category:'0',
         stock_status:"all",
         availability:"all",
         vendor:"",
@@ -41,14 +41,13 @@ export const setApiSortProduct = createCustomAction('apigetproduct/setApiSortPro
     orderBy,sortName
 }))
 
-export const setSearchApiProduct = createCustomAction('apigetproduct/setSeacrchApiProduct',(
-    
-
+export const setApiSearchProduct = createCustomAction('apigetproduct/setSeacrchApiProduct',(
+    searchForm : IApiSearchProduct
 ) =>({
-
+    searchForm
 }))
 
-const actions = {setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
+const actions = {setApiSearchProduct,setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
 
 type Action = ActionType<typeof actions>;
 
@@ -64,6 +63,15 @@ export default function reducer (state : ProductState = initProductState ,action
             return ({...state,apigetproduct : {...state.apigetproduct,count : action.data}});
         case getType(setApiSortProduct) :
             return ({...state,apigetproduct : {...state.apigetproduct,sort : action.sortName ,order_by : action.orderBy}});
+        case getType(setApiSearchProduct) :
+            return ({...state,apigetproduct : {...state.apigetproduct,
+                avaibility : action.searchForm.avaibility,
+                category : action.searchForm.category,
+                search : action.searchForm.search,
+                search_type : action.searchForm.search_type,
+                stock_status : action.searchForm.stock_status,
+                vendor : action.searchForm.vendor,
+            }})
         default :
             return state;
     }

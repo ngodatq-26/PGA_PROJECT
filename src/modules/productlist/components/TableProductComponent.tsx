@@ -8,18 +8,19 @@ import { HeadCell } from '../../../models/common';
 import { ApiProductList, IProduct } from '../../../models/product';
 import { AppState } from '../../../redux/reducer';
 import { setApiCountProduct, setApiGetProduct, setApiPageProduct, setApiSortProduct } from '../redux/productReducer';
-import EnhancedTableHead from '../../common/components/TableForm/EnhancedTableHead';
-import PaginationComponent from '../../common/components/TableForm/PaginationComponent';
+import EnhancedTableHead from './EnhancedTableHead';
+import PaginationComponent from './PaginationComponent';
 import TableRowProductComponent from './TableRowProductComponent';
 
 interface PropFormTable {
     Data? : IProduct[];
     HeadCells : HeadCell[];
+    fetchData(e : ApiProductList) : void;
 }
 
 const TableForm = (propFormTable : PropFormTable) =>{
 
-    const {Data,HeadCells}= propFormTable;
+    const {Data,HeadCells,fetchData}= propFormTable;
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
 
@@ -28,17 +29,11 @@ const TableForm = (propFormTable : PropFormTable) =>{
     const [page,setPage] = useState(1);
     const [rowPerPage,setRowPerPage] = useState(Redux_ApiGetProduct.count); 
 
-    useEffect(()=>{
-        dispatch(setApiSortProduct(sortName,orderBy));
-    },[sortName,orderBy])
-
-    useEffect(()=>{
-        dispatch(setApiPageProduct(page));    
+    React.useEffect(()=>{
+        dispatch(setApiPageProduct(page));
     },[page])
 
-    useEffect(() =>{
-        dispatch(setApiCountProduct(rowPerPage))
-    },[rowPerPage]);
+    console.log(Redux_ApiGetProduct);
 
     return (
         <div>

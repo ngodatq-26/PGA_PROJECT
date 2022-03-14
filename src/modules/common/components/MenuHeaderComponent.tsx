@@ -98,8 +98,7 @@ const MenuHeaderComponent = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      
+    <Box > 
       {/* appbar header web*/}
       <AppBar position="fixed" open={open} sx={{backgroundColor :'#323259',height:'80px'}} className="appbar" >
         <Toolbar>
