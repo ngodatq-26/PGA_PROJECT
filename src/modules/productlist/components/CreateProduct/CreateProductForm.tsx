@@ -19,8 +19,6 @@ const CreateProductForm = () =>{
         alert(JSON.stringify(values, null, 2));
       },
     });
-    const options = { title: 'The Shawshank Redemption', year: 1994 };
-
 
     return (
         <form onSubmit={formik.handleSubmit} 
@@ -57,7 +55,7 @@ const CreateProductForm = () =>{
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                placeholder ="Type Vendor name to select"
+                                
                     ></input>
                     {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
                 </div>
@@ -98,7 +96,7 @@ const CreateProductForm = () =>{
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                placeholder ="Type Vendor name to select"
+                                
                     ></input>
                     {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
                 </div>
@@ -121,7 +119,6 @@ const CreateProductForm = () =>{
                         
                     </select>
                     {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>Error</FormHelperText>) : null }
                 </div>
                 <div className="field-form">
                     <div>
@@ -133,7 +130,7 @@ const CreateProductForm = () =>{
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                placeholder ="Type Vendor name to select"
+                                
                     ></input>
                     {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
                 </div>
