@@ -7,60 +7,62 @@ import {AppState} from "../../../redux/reducer";
 import {setApiGetProduct, setProductAction,setApiPageProduct, setApiSearchProduct} from "../redux/productReducer";
 import { fetchThunk } from '../../common/redux/thunk';
 import { API_PATHS } from '../../../configs/api';
-import TableProductComponent from '../components/TableProductComponent';
+import TableProductComponent from '../components/ProductListForm/TableProductComponent';
 import { IProduct,IApiSearchProduct } from '../../../models/product';
-import {ApiProductList} from '../../../models/product'
+import {IApiGetProduct} from '../../../models/product'
 import { useSelector } from 'react-redux';
-import TableRowProductComponent from '../components/TableRowProductComponent';
-import { headCells } from '../utils';
-import initProductState from '../redux/productReducer';
-import SearchFormComponent from '../components/SeacrhFormComponent';
-import { Button } from '@mui/material';
+import {initProductState} from '../redux/productReducer';
+import { Box, Button, Paper, Table, TableContainer } from '@mui/material';
+import EnhancedTableHead from '../components/ProductListForm/EnhancedTableHead';
+import TableUserComponent from '../../userlist/components/UserListForm/TableUserComponent';
+import PaginationComponent from '../components/ProductListForm/PaginationComponent';
+import SearchFormComponent from '../components/ProductListForm/SearchFormComponent';
 
 const ProductListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
-    const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
 
-    const [data,setData] = useState<Array<IProduct>>([]);
-    const fetchData = useCallback(async (e : ApiProductList) =>{
-         const json = await dispatch(fetchThunk(API_PATHS.productList,'post',e));
-         if(json.data === false) {
-            setData([]);
-        } else {
-         dispatch(setProductAction(json.data))
-         setData(json.data);
-        }
-    },[]);
+    const [api,setApi] = React.useState<IApiGetProduct>(initProductState.apigetproduct);
+    const [data,setData] = React.useState<Array<IProduct>>([]);
 
-    const fetchBegin = useCallback(async () =>{
-        const json = await dispatch(fetchThunk(API_PATHS.productList,'post',initProductState));
+    const fetchUser = useCallback(async () =>{
+        const json = await dispatch(fetchThunk(API_PATHS.productList,'post',api));
         if(json.data === false) {
            setData([]);
        } else {
-        dispatch(setProductAction(json.data))
-        setData(json.data);
+          setData(json.data);
+          dispatch(setApiGetProduct(api))
        }
-   },[]);
+   },[api]);
 
-   useEffect (() =>{
-       fetchBegin();
-   },[]);
+   useEffect(() => {
+       fetchUser();
+   },[api])
 
     return (
         <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
             
-            <MenuHeaderComponent />
-            <div style ={{marginTop :'80px'}}>
-              <div style={{color : 'white'}}>
-                  Products
-              </div>
-              <SearchFormComponent fetchData = {fetchData} />
-              <div style={{marginBottom : '30px'}}>
-                <Button variant='contained' href='/pages/products/new-product'>Add Product</Button>
-              </div>
-              <TableProductComponent Data = {data} HeadCells ={headCells} fetchData = {fetchData}/>
-            </div>
+        <MenuHeaderComponent />
+        
+        <div style ={{marginTop :'80px'}}>
+           <SearchFormComponent />
+           <div style={{ margin:'30px'}}>
+                    <div style={{marginBottom : '30px'}}>
+                        <Button variant='contained' href='/pages/user/new-user'>Add User</Button>
+                    </div>
+                    <Box sx={{ width: '100%',backgroundColor : '#323259' }}>
+                        <Paper sx={{ width: '100%', mb: 2 }}>
+                            <TableContainer sx={{backgroundColor : '#323259'}}>
+                                <Table sx={{minwidth : 750}}>
+                                <EnhancedTableHead api ={api} setApi ={setApi}/>
+                                <TableProductComponent data={data} />
+                                </Table>
+                            </TableContainer>
+                        </Paper>
+                    </Box>
+                     <PaginationComponent api ={api} setApi ={setApi} />
+           </div>
         </div>
+    </div>
     )
 }
 

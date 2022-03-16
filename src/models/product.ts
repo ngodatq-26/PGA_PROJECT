@@ -16,7 +16,7 @@ export interface IProduct {
     condition : string,
 }
 
-export interface ApiProductList {
+export interface IApiGetProduct {
     page : number,
     count : number,
     search : string | null,

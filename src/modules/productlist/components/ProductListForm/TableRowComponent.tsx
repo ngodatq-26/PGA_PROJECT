@@ -1,9 +1,9 @@
 import { CheckBox } from '@mui/icons-material';
 import { Checkbox, TableCell, TableRow,Button } from '@mui/material';
 import React, { useState } from 'react';
-import { IProduct } from '../../../models/product';
+import { IProduct } from '../../../../models/product';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {TimeConvert,formatter} from '../utils';
+import {TimeConvert,formatter} from '../../utils/utils';
 
 interface PropTableRow {
     product : IProduct;
@@ -16,7 +16,6 @@ const TableRowProductComponent = (propTableRow : PropTableRow) =>{
                 <TableCell><Checkbox color="primary" 
                                   inputProps={{'aria-label' : 'select all desserts'}}
                 /></TableCell>
-                <TableCell></TableCell>
                 <TableCell align="left">{product?.sku}</TableCell>
                 <TableCell align="left"
                            sx ={{

@@ -1,10 +1,10 @@
 import {IApiSearchProduct, IProduct} from "../../../models/product";
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
-import { ApiProductList } from "../../../models/product";
+import { IApiGetProduct } from "../../../models/product";
 
 export interface ProductState {
     productlist? : IProduct[],
-    apigetproduct : ApiProductList,
+    apigetproduct : IApiGetProduct,
 }
 
 export const initProductState : ProductState ={
@@ -25,7 +25,7 @@ export const setProductAction = createCustomAction('productlist/setProductAction
     data,
 }));
 
-export const setApiGetProduct = createCustomAction('apigetproduct/setApiGetProduct',(data : ApiProductList) =>({
+export const setApiGetProduct = createCustomAction('apigetproduct/setApiGetProduct',(data : IApiGetProduct) =>({
         data,
 }))
 

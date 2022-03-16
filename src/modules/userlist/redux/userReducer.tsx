@@ -1,6 +1,5 @@
 import {IApiGetUsers,IApiCreateUser,IUserList} from "../../../models/user";
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
-import { ApiProductList } from "../../../models/product";
 
 export interface UserState {
     userlist? : IUserList[],

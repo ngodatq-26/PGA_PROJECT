@@ -1,16 +1,17 @@
-import { HeadCell, Search } from "../../models/common";
+import { Search } from "../../../models/common";
 import {useDispatch} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {Action} from "redux";
-import {AppState} from "../../redux/reducer";
+import {AppState} from "../../../redux/reducer";
+import { IProduct } from "../../../models/product";
 
+interface HeadCell {
+    disablePadding : boolean,
+    id : keyof IProduct,
+    label : string,
+    numeric : boolean
+}
 export const headCells: HeadCell[] = [
-    {
-      id: 'name',
-      numeric: false,
-      disablePadding: true,
-      label: '',
-    },
     {
         id: 'sku',
         numeric: true,
@@ -53,12 +54,6 @@ export const headCells: HeadCell[] = [
         disablePadding : false,
         label:'Arrival Date'
     },
-    {
-        id : 'id',
-        numeric : false,
-        disablePadding : false,
-        label :"Delete"
-    },
 ];
 
 export const TimeConvert = (UNIX_timestamp : number) =>{
@@ -79,7 +74,6 @@ export const formatter = new Intl.NumberFormat('en-US',{
     currency: 'USD',
 })
 
-
 export const checkboxSearch : Search[] = [
     {
         label : 'Name',
@@ -92,64 +86,3 @@ export const checkboxSearch : Search[] = [
         value :'description'
     }
 ]
-export const stockStatusSearch : Search[] =  [
-    {
-        label : 'Any stock status',
-        value : 'all',
-    },
-    {
-        label :'In stock',
-        value : 'in',
-    },
-    {
-        label : 'Low stock' ,
-        value : 'low',
-    },
-    {
-        label :'SOLD',
-        value : 'out',
-    }
-]
-
-export const avaibilitySearch : Search[] = [
-    {
-        label : 'Any avaibility status',
-        value : 'all'
-    },
-    {
-        label : 'Only enable',
-        value : '1'
-    },
-    {
-        label : 'Only disable',
-        value : '0'
-    }
-]
-
-export const categorySeacrh : Search[] = [
-    {
-        label : 'Any category',
-        value : 0
-    },
-    {
-        label :'----Computers & Electronics',
-        value : 3
-    },
-    {
-        label :'',
-        value :''
-    },
-    {
-        label :'',
-        value :''
-    },
-    {
-        label :'',
-        value :''
-    },
-    {
-        label :'',
-        value :''
-    }
-]
-
