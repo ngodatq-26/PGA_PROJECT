@@ -22,5 +22,8 @@ export const API_PATHS = {
   signIn: `https://api.gearfocus.div4.pgtest.co/api/authentication/login`,
   userProfile: `${getBaseUrl(APIService.public)}/user`,
   productList : getBaseUrl(APIService.public) + '/api/products/list',
-  createProduct : getBaseUrl(APIService.public) + '/api/products/list'
+  createProduct : getBaseUrl(APIService.public) + '/api/products/list',
+  userList : getBaseUrl(APIService.public) + '/apiAdmin/users/list',
+  country : getBaseUrl(APIService.public) + '/apiAdmin/commons/country',
+  state :  getBaseUrl(APIService.public) + '/apiAdmin/commons/state'
 };

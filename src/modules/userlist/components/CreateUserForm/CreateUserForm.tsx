@@ -5,6 +5,7 @@ import { ValidationSchema } from '../../utils/valid';
 import '../../styles/CreateUserStyle.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+
 const CreateUserForm = () =>{
     const formik = useFormik({
         initialValues :{
@@ -14,12 +15,16 @@ const CreateUserForm = () =>{
             password : '',
             confirmpassword :'',
             paymentRailsType :'individual',
+            membership:'0',
         },
        validationSchema : ValidationSchema,
        onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
       },
     });
+
+    const [force,setForce] = React.useState(0);
+    const [taxExempt,setTaxExempt] = React.useState(0);
 
     return (
         <form onSubmit={formik.handleSubmit} 
@@ -97,7 +102,7 @@ const CreateUserForm = () =>{
                     {formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.confirmpassword}</FormHelperText>) : null }
                 </div>
                 <div className="field-form">
-                    <label style={{color:'white'}}>Category</label>
+                    <label style={{color:'white'}}>Type</label>
                     <select
                         className='form-select'
                         name="paymentRailsType"
@@ -108,7 +113,6 @@ const CreateUserForm = () =>{
                         <option value="individual">Individual</option>
                         <option value="business">Business</option>
                     </select>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
                 </div>
                 <div className="field-form">
                       <label style={{color:'white'}}>PaymentRails ID</label>
@@ -120,15 +124,14 @@ const CreateUserForm = () =>{
                     <label style={{color:'white'}}>Acess Level</label>
                     <select
                         className='form-select'
-                        name="email"
+                        name=""
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.firstname}
                     >
-                        <option value={10}>Admin</option>
-                        <option value={20}>Vendor</option>
+                        <option value={100}>Admin</option>
+                        <option value={10}>Vendor</option>
                     </select>
-                    {formik.touched.firstname && Boolean(formik.errors.firstname) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.firstname}</FormHelperText>) : null }
                 </div>
                 <div className="field-form">
                     <label style={{color:'white'}}>Membership</label>
@@ -137,24 +140,22 @@ const CreateUserForm = () =>{
                         name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.email}
+                        value={formik.values.membership}
                     >
-                        <option value={10}>Ignore Membership</option>
-                        <option value={20}>General</option>
                     </select>
                     {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
                 </div>
                 <div>
                      
                      <label style={{color:'white'}}>Require to change password on next log in</label>
-                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
+                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value={1}></input>
                 </div>
              </div>
              <div>
                  <div><div style={{color:'white',fontSize :'1.125rem',fontFamily :'sans-serif'}}>Tax information</div></div>
                  <div>    
                      <label style={{color:'white'}}>Tax exempt</label>
-                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
+                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value={1}></input>
                 </div>
              </div>
              <div>

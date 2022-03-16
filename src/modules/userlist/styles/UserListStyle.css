@@ -1,0 +1,18 @@
+.search-form {
+    display : flex;
+    flex-direction: column;
+    margin: 30px;
+    margin-top: 70px;
+}
+.search-form div{
+    display : flex;
+    flex-direction: row;
+    background-color: #323259 !important;
+    margin-top:4px;
+    
+}
+
+.div-2 div{
+    display : flex;
+    flex-direction: column;
+}

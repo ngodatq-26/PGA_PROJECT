@@ -26,8 +26,6 @@ const LoginForm = (props: Props) => {
     onLogin(formik.values.email,formik.values.password);
   }, [onLogin]);
 
- 
-
   const formik = useFormik({
       initialValues: {
         email: 'admin.training@powergatesoftware.com',

@@ -15,7 +15,7 @@ const TableRowProductComponent = (propTableRow : PropTableRow) =>{
             <TableRow>
                 <TableCell><Checkbox color="primary" 
                                   inputProps={{'aria-label' : 'select all desserts'}}
-                        /></TableCell>
+                /></TableCell>
                 <TableCell></TableCell>
                 <TableCell align="left">{product?.sku}</TableCell>
                 <TableCell align="left"

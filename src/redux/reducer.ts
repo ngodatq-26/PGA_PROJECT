@@ -4,12 +4,14 @@ import { combineReducers } from 'redux';
 import authReducer, { AuthState } from '../modules/auth/redux/authReducer';
 import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
 import productReducer,{ProductState} from '../modules/productlist/redux/productReducer';
+import userReducer, { UserState } from '../modules/userlist/redux/userReducer';
 
 export interface AppState {
   router: RouterState;
   intl: IntlState;
   profile: AuthState;
   productlist : ProductState
+  userlist : UserState
 }
 
 export default function createRootReducer(history: History) {
@@ -18,5 +20,6 @@ export default function createRootReducer(history: History) {
     intl: intlReducer,
     profile: authReducer,
     productlist : productReducer,
+    userlist : userReducer
   });
 }

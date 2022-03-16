@@ -78,6 +78,8 @@ export const formatter = new Intl.NumberFormat('en-US',{
     style: 'currency',
     currency: 'USD',
 })
+
+
 export const checkboxSearch : Search[] = [
     {
         label : 'Name',
@@ -149,5 +151,5 @@ export const categorySeacrh : Search[] = [
         label :'',
         value :''
     }
-
 ]
+

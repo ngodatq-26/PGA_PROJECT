@@ -9,8 +9,10 @@ const HomePage = lazy(() => import('./modules/home/pages/HomePage'));
 const ContactPage = lazy(() => import('./modules/home/pages/ContactPage'));
 const LoginPage = lazy(() => import('./modules/auth/pages/LoginPage'));
 const ProductListPage = lazy(() => import('./modules/productlist/pages/ProductListPage'));
+const UserListPage = lazy(()=> import('./modules/userlist/pages/UserListPage'));
 const CreateProductPage = lazy(() => import('./modules/productlist/pages/CreateProductPage'));
 const CreateUserPages =lazy(() =>import( './modules/userlist/pages/CreateUserPages'));
+
 
 interface Props {}
 
@@ -25,6 +27,7 @@ export const Routes = (props: Props) => {
         <Route path={ROUTES.contact} component={ContactPage} />
         <Route path={ROUTES.products} component={ProductListPage} />
         <Route path ={ROUTES.createproduct} component ={CreateProductPage} />
+        <Route path ={ROUTES.users} component = {UserListPage} />
         <Route path={ROUTES.createuser} component ={CreateUserPages} />
         <Route path="/" component={LoginPage} />
       </Switch>

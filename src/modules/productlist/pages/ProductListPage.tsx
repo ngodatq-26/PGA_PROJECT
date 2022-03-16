@@ -22,7 +22,6 @@ const ProductListPage = () =>{
     const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
 
     const [data,setData] = useState<Array<IProduct>>([]);
-
     const fetchData = useCallback(async (e : ApiProductList) =>{
          const json = await dispatch(fetchThunk(API_PATHS.productList,'post',e));
          if(json.data === false) {
