@@ -26,9 +26,11 @@ const ProductListPage = () =>{
 
     const [api,setApi] = React.useState<IApiGetProduct>(initProductState.apigetproduct);
     const [data,setData] = React.useState<Array<IProduct>>([]);
+    const [checkReload,setCheckReload] = React.useState(false);
 
     const fetchUser = useCallback(async () =>{
         const json = await dispatch(fetchThunk(API_PATHS.productList,'post',api));
+        setCheckReload(false);
         if(json.data === false) {
            setData([]);
        } else {
@@ -62,8 +64,10 @@ const ProductListPage = () =>{
                             </TableContainer>
                         </Paper>
                     </Box>
-                     <PaginationComponent api ={api} setApi ={setApi} />
-                     <DeleteForm />
+                    <div style={{ marginBottom :'10'}}>
+                       <PaginationComponent api ={api} setApi ={setApi} />
+                    </div>
+                    <DeleteForm api={api} setApi ={setApi} setCheckReload ={setCheckReload} />
            </div>
         </div>
     </div>

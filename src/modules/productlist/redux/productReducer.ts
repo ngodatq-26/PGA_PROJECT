@@ -1,10 +1,12 @@
 import {IApiSearchProduct, IProduct} from "../../../models/product";
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
 import { IApiGetProduct } from "../../../models/product";
+import { IDelete } from "../../../models/common";
 
 export interface ProductState {
     productlist? : IProduct[],
     apigetproduct : IApiGetProduct,
+    deletelist? : IDelete[]
 }
 
 export const initProductState : ProductState ={
@@ -21,6 +23,11 @@ export const initProductState : ProductState ={
         search_type:""
     }
 }
+
+export const setDeleteProductAction = createCustomAction('deletelist/setDeleteProductAction',(data : IDelete[]) =>({
+    data,
+}))
+
 export const setProductAction = createCustomAction('productlist/setProductAction',(data : IProduct[]) =>({
     data,
 }));
@@ -47,12 +54,14 @@ export const setApiSearchProduct = createCustomAction('apigetproduct/setSeacrchA
     searchForm
 }))
 
-const actions = {setApiSearchProduct,setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
+const actions = {setDeleteProductAction,setApiSearchProduct,setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
 
 type Action = ActionType<typeof actions>;
 
 export default function reducer (state : ProductState = initProductState ,action : Action) {
     switch(action.type) {
+        case getType(setDeleteProductAction):
+            return ({...state, deletelist : action.data});
         case getType(setProductAction):
             return ({...state, productlist : action.data});
         case getType(setApiGetProduct) : 

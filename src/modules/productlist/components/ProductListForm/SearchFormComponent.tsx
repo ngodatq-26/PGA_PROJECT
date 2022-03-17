@@ -96,7 +96,7 @@ const SearchFormComponent = (props : Props) =>{
                     <Select className='' aria-label="Default select example" style={{width : '100%'}} defaultValue='Any Category' onChange={handleChangeCategory}>
                         <Option value={0}>Any Category</Option>
                         {Redux_Category ? Redux_Category.map((e,index : number) =>(
-                            <Option key={index}  value={e.id}>{e.name}</Option>
+                            <Option key={e.id}  value={e.id}>{e.name}</Option>
                         )) : null}
                     </Select>
                 </li>

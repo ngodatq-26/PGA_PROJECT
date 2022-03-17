@@ -53,7 +53,7 @@ export const headCells: HeadCell[] = [
         numeric : true,
         disablePadding : false,
         label:'Arrival Date'
-    },
+    }
 ];
 
 export const TimeConvert = (UNIX_timestamp : number) =>{

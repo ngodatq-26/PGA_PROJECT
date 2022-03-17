@@ -73,8 +73,8 @@ export interface IAdministrator {
 }
 
 export interface ICustomer {
-    id: string
-    name: string
+    id: string,
+    name: string,
 }
 export interface IDelete {
     id : string,

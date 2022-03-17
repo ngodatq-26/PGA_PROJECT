@@ -32,4 +32,5 @@ export const API_PATHS = {
   conditionList : getBaseUrl(APIService.public) + '/apiAdmin/conditions/list',
   shippingList : getBaseUrl(APIService.public) + '/apiAdmin/shipping/list',
   roleList : getBaseUrl(APIService.public) + '/apiAdmin/commons/role',
+  productEdit : getBaseUrl(APIService.public) + '/apiAdmin/products/edit'
 };
