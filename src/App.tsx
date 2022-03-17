@@ -74,7 +74,7 @@ function App() {
   },[]);
 
   const fetchRole = useCallback(async() =>{
-    const json = await dispatch(fetchThunk(API_PATHS.vendorList,'post'));
+    const json = await dispatch(fetchThunk(API_PATHS.roleList,'post'));
     if(json.data === false) {
        setRole([]);
     } else {
@@ -94,7 +94,7 @@ function App() {
   },[])
 
   const fetchVendor = useCallback(async() =>{
-    const json = await dispatch(fetchThunk(API_PATHS.roleList,'post'));
+    const json = await dispatch(fetchThunk(API_PATHS.vendorList,'post'));
     if(json.data === false) {
        setVendor([]);
     } else {

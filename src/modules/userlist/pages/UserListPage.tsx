@@ -37,14 +37,14 @@ const UserListPage = () =>{
        fetchUser();
    },[apiGetUser])
 
-
+   
     return (
         <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
             
         <MenuHeaderComponent />
         
         <div style ={{marginTop :'80px'}}>
-           <SeacrhFormComponent />
+           <SeacrhFormComponent api={apiGetUser} setApi = {setApiGetUser} />
            <div style={{ margin:'30px'}}>
            <div style={{marginBottom : '30px'}}>
                 <Button variant='contained' ><Link style={{color:'white'}} to= '/pages/user/new-user'>Add User</Link></Button>

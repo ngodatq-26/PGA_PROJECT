@@ -29,20 +29,20 @@ export interface IApiCreateUser {
 }
 
 export interface IApiGetUsers {
-        address: string | null
+        address: string
         count: number
         country: string
-        date_range: Array<string> | null
+        date_range: Array<string>
         date_type: string
-        memberships: Array<string> | null
+        memberships: Array<string> 
         order_by: string
         page: number
-        phone: string | null
-        search: string | null
+        phone: string 
+        search: string 
         sort: string
-        state: string| null
-        status: Array<string> | null
-        types: Array<string> | null
+        state: string
+        status: Array<string> 
+        types: Array<string> 
         tz: number
 }
 

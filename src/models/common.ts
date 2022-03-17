@@ -67,12 +67,14 @@ export interface IRole {
 }
 
 export interface IAdministrator {
+    map(arg0: (e: any) => JSX.Element): import("react").ReactNode;
     enabled: string
     id: string
     name: string
 }
 
 export interface ICustomer {
+    map(arg0: (e: any) => JSX.Element): import("react").ReactNode;
     id: string,
     name: string,
 }

@@ -1,24 +1,28 @@
-.search-form {
-    display : flex;
-    flex-direction: column;
-    margin: 30px;
-    margin-top: 70px;
-}
-.search-form div{
-    display : flex;
-    flex-direction: row;
-    background-color: #323259 !important;
-    margin-top:4px;
-    
-}
-
-.div-2 div{
-    display : flex;
-    flex-direction: column;
-}
-
 body {
     display : flex;
     background-color :#323259 ;
     width: 100%;
+}
+
+.box-search {
+    margin: 30px;
+    padding-top: 10px
+}
+.ul-search-1 li{
+    padding-right : 20px;
+}
+.ul-search-2  {
+    padding-right:50px;
+    width : 100%
+}
+
+.box-search ul li{
+    padding: 20px;
+}
+.box-search ul {
+    background-color: #323259
+}
+
+.form-country div{
+    margin-bottom : 5px
 }

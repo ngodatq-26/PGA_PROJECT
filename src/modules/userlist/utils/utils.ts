@@ -1,3 +1,4 @@
+import { Search } from "../../../models/common";
 import { IUserList } from "../../../models/user";
 
 export interface HeadCell {
@@ -71,3 +72,22 @@ export const TimeConvert = (UNIX_timestamp : number) =>{
     const time = month + ' ' + date + ',' + year + ',' + hour +':' + min;
     return time;
 } 
+
+export const TypeStatus : Search[] = [
+    {
+        label : 'Any status',
+        value : '',
+    },
+    {
+        label : 'Enable',
+        value : 'E'
+    },
+    {
+        label : 'Disable',
+        value : 'D'
+    },
+    {
+        label : 'Unapproved vendor',
+        value : 'U'
+    }
+]

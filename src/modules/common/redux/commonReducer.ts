@@ -8,7 +8,7 @@ export interface commonState {
     brand? : IBrand[]
     vendor? : IVendor[]
     condition? : ICondition[]
-    role? : IRole[]
+    role? : IRole
     shipping? : IShipping[]
 }
 
@@ -32,7 +32,7 @@ export const setGetConditionAction = createCustomAction('condition/setGetConditi
     data,
 }));
 
-export const setGetRoleAction = createCustomAction('role/setGetRoleAction',(data : IRole[]) =>({
+export const setGetRoleAction = createCustomAction('role/setGetRoleAction',(data : IRole) =>({
     data,
 }));
 

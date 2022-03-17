@@ -73,6 +73,7 @@ const SearchFormComponent = (props : Props) =>{
     const handleChangeVendor = (value : any) =>{
         setVendor(value);
     }
+    
     const onSearch = (value : string) =>{
         if(value !== "") {
         fillterVendor(value);
