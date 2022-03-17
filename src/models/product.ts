@@ -19,7 +19,7 @@ export interface IProduct {
 export interface IApiGetProduct {
     page : number,
     count : number,
-    search : string | null,
+    search : string ,
     category : string,
     stock_status : string,
     availability : string ,

@@ -4,12 +4,16 @@ import React, { useState } from 'react';
 import { IProduct } from '../../../../models/product';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TimeConvert,formatter} from '../../utils/utils';
+import { IDelete } from '../../../../models/common';
 
 interface PropTableRow {
     product : IProduct;
 }
 const TableRowProductComponent = (propTableRow : PropTableRow) =>{
 
+    const [deleteItem,setDeleteItem] = React.useState<Array<IDelete>>([]);
+    
+    
     const {product} = propTableRow;
     return (
             <TableRow>

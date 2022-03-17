@@ -1,0 +1,16 @@
+body{
+    display : flex;
+    background-color :#323259 ;
+    width: 100%;
+}
+.delete-form {
+    position: sticky;
+    bottom: 0;
+    background: #323259;
+    padding: 15px 2.25rem;
+    margin-top: 40px;
+    border: 1px solid #1b1b38;
+    border-width: 0 0 1px 1px;
+    box-shadow: 0 0 13px 0 #b18aff;
+    z-index: 2
+}

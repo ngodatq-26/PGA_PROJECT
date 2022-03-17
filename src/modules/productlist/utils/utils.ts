@@ -86,3 +86,38 @@ export const checkboxSearch : Search[] = [
         value :'description'
     }
 ]
+
+export const Stock_Status : Search[] = [
+    {
+        label: 'Any stock status',
+        value: 'all'
+    },
+    {
+        label: 'In stock',
+        value: 'in'
+    },
+    
+    {
+        label: 'Low stock',
+        value: 'low'
+    },
+    {
+        label: 'SOLD',
+        value: 'out'
+    }
+]
+
+export const Avaibility : Search[] = [
+    {
+        label : 'Any avaibility status',
+        value : 'all'
+    },
+    {
+        label : 'Only enable',
+        value : '1'
+    },
+    {
+        label : 'Only disable',
+        value :'0'
+    }
+]

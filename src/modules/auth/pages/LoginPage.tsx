@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import logo from '../../../logo-420-x-108.png';
 import { ILoginParams } from '../../../models/auth';
@@ -15,6 +15,7 @@ import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
 import { ROUTES } from '../../../configs/routes';
 import { replace } from 'connected-react-router';
 import { getErrorMessageResponse } from '../../../utils';
+import { Redirect } from 'react-router-dom';
 
 const LoginPage = () => {
   const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
@@ -44,8 +45,13 @@ const LoginPage = () => {
     },
     [dispatch],
   );
+  const isLogin = useMemo(() => Cookies.get(ACCESS_TOKEN_KEY), []);
   
   return (
+    <div>
+      {isLogin ? (
+        <Redirect to={ROUTES.products} />
+      ) : (
     <div
       className="container"
       style={{
@@ -56,8 +62,8 @@ const LoginPage = () => {
         flexDirection: 'column',
       }}
     >
-      
       <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage}  />
+    </div>)}
     </div>
   );
 };

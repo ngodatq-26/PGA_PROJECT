@@ -17,6 +17,9 @@ import EnhancedTableHead from '../components/ProductListForm/EnhancedTableHead';
 import TableUserComponent from '../../userlist/components/UserListForm/TableUserComponent';
 import PaginationComponent from '../components/ProductListForm/PaginationComponent';
 import SearchFormComponent from '../components/ProductListForm/SearchFormComponent';
+import { Link } from 'react-router-dom';
+import '../styles/styleProductPage.css'
+import DeleteForm from '../components/ProductListForm/DeleteForm';
 
 const ProductListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
@@ -39,15 +42,15 @@ const ProductListPage = () =>{
    },[api])
 
     return (
-        <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
+        <div style ={{display : 'flex',backgroundColor :'#1b1b38',width:'100%'}}>
             
         <MenuHeaderComponent />
         
         <div style ={{marginTop :'80px'}}>
-           <SearchFormComponent />
+           <SearchFormComponent api ={api} setApi ={setApi}/>
            <div style={{ margin:'30px'}}>
                     <div style={{marginBottom : '30px'}}>
-                        <Button variant='contained' href='/pages/user/new-user'>Add User</Button>
+                        <Button variant='contained' ><Link style={{color:'white'}} to ="/pages/products/new-product">Add Products</Link></Button>
                     </div>
                     <Box sx={{ width: '100%',backgroundColor : '#323259' }}>
                         <Paper sx={{ width: '100%', mb: 2 }}>
@@ -60,6 +63,7 @@ const ProductListPage = () =>{
                         </Paper>
                     </Box>
                      <PaginationComponent api ={api} setApi ={setApi} />
+                     <DeleteForm />
            </div>
         </div>
     </div>

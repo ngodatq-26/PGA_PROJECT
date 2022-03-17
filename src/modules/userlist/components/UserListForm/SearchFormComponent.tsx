@@ -8,7 +8,7 @@ import moment from 'moment';
 import { ICountry, IState } from '../../../../models/common';
 import { fetchThunk } from '../../../common/redux/thunk';
 import { API_PATHS } from '../../../../configs/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppState } from '../../../../redux/reducer';
 import { Action } from 'redux';
@@ -19,17 +19,15 @@ const SearchFormComponent = () => {
   const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
   const [date, setDate] = React.useState(moment(new Date()));
   const [state,setState] = React.useState<Array<IState>>([]);
-  const [country,setCountry] = React.useState<Array<ICountry>>([]);
+  
+  const country  = useSelector((state: AppState) => 
+    state.common.country
+  )
+  const brand  = useSelector((state: AppState) => 
+    state.common.brand
+  )
 
-  const fetchCountry =  useCallback(async () =>{
-    const json = await dispatch(fetchThunk(API_PATHS.country,'post'));
-    if(json.data === false) {
-       setCountry([]);
-    } else {
-      setCountry(json.data);
-    }
-  },[]);
-
+  console.log(brand)
   const fetchState  = useCallback(async(code) =>{
     const json = await dispatch(fetchThunk(API_PATHS.state,'post',{code}));
     if(json.data === false) {
@@ -38,10 +36,6 @@ const SearchFormComponent = () => {
      setState(json.data);
    }
   },[])
-
-  useEffect(() =>{
-      fetchCountry();
-  },[]);
 
   const handleDateChange = (dateObj: moment.Moment, dateStr: string): void => {
       setDate(dateObj);
@@ -78,13 +72,13 @@ const SearchFormComponent = () => {
           <div>  
              <div>
                <label style={{color:'white'}}>Country</label>
-                <CustomSelect renderValue={renderValue} onChange={
+                <CustomSelect renderValue={renderValue}  onChange={
                   (e) =>{ fetchState(e)}
-                } >
-                        {
+                }>
+                        {country ? 
                           country.map((e,index : number) =>(
                              <StyledOption key={index} value={e.code}>{e.country}</StyledOption>
-                          ))
+                          )) : null 
                         }
                   </CustomSelect>
               </div>

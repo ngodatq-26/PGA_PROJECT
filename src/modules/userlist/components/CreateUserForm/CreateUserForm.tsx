@@ -4,6 +4,7 @@ import React from 'react';
 import { ValidationSchema } from '../../utils/valid';
 import '../../styles/CreateUserStyle.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom';
 
 
 const CreateUserForm = () =>{
@@ -38,7 +39,7 @@ const CreateUserForm = () =>{
          >
              <div>
                 <div>
-                    <div><Button variant='contained' href=""><ArrowBackIcon /></Button></div>
+                    <div><Button variant='contained'><Link to = 'pages/users/manage-user'><ArrowBackIcon /></Link></Button></div>
                     <div style={{color:'white',fontSize :'2rem',fontFamily :'sans-serif'}}>Create Profile</div>
                     <div style={{color:'white',fontSize :'1.125rem',fontFamily :'sans-serif'}}>Email & password</div>
                 </div>

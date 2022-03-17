@@ -15,6 +15,7 @@ import { initUserState } from '../redux/userReducer';
 import {ICountry, IState} from '../../../models/common'
 import { Box, Button, Paper, Table, TableContainer } from '@mui/material';
 import {setApiGetUsers} from '../redux/userReducer';
+import { Link } from 'react-router-dom';
 
 const UserListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
@@ -46,7 +47,7 @@ const UserListPage = () =>{
            <SeacrhFormComponent />
            <div style={{ margin:'30px'}}>
            <div style={{marginBottom : '30px'}}>
-                <Button variant='contained' href='/pages/user/new-user'>Add User</Button>
+                <Button variant='contained' ><Link to= '/pages/user/new-user'>Add User</Link></Button>
             </div>
             <Box sx={{ width: '100%',backgroundColor : '#323259' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
