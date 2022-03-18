@@ -1,6 +1,8 @@
 import React from 'react';
 import MenuHeaderComponent from '../../common/components/MenuHeaderComponent';
 import CreateUserForm from '../components/CreateUserForm/CreateUserForm';
+import '../../common/Styles/styles.css';
+import 'antd/dist/antd.css';
 
 const CreateUserPage = () =>{
     return (

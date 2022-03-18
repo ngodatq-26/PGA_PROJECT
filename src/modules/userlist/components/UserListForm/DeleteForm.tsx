@@ -1,5 +1,5 @@
-import { Affix, Button } from 'antd'
-import React, { useCallback, useState } from 'react'
+import { Affix, Button } from 'antd';
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';
@@ -8,30 +8,18 @@ import { API_PATHS } from '../../../../configs/api';
 import { IApiGetProduct } from '../../../../models/product';
 import { AppState } from '../../../../redux/reducer';
 import { fetchThunk } from '../../../common/redux/thunk';
-import { setDeleteProductAction } from '../../redux/productReducer';
-import '../../styles/styleProductPage.css';
-import 'antd/dist/antd.css';
 
-interface Props {
-  api : IApiGetProduct;
-  setApi(a : IApiGetProduct) : void
-  setCheckReload (a : boolean) : void
-}
 
-const DeleteForm = (props : Props) => {
-
-  const {api,setApi,setCheckReload} = props 
+const DeleteForm = () => {
   const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
-  const Redux_DeleteList = useSelector((state : AppState) => state.productlist.deletelist);
+  const Redux_DeleteList = useSelector((state : AppState) => state.userlist.deletelist);
 
   const fetchDelete = useCallback(async () =>{
-    const json = await dispatch(fetchThunk(API_PATHS.productEdit,'post',{params : Redux_DeleteList}));
+    const json = await dispatch(fetchThunk(API_PATHS.userEdit,'post',{params : Redux_DeleteList}));
   },[]);
 
   const Click = () =>{
-    setCheckReload(true);
     fetchDelete();
-    window.location.assign('/pages/products')
   }
 
   console.log(Redux_DeleteList);
@@ -42,7 +30,7 @@ const DeleteForm = (props : Props) => {
              <Button type="primary" disabled>
                 Save changes
               </Button>) : <Button type="primary" onClick={Click} >
-                 Remove Selected
+                 <Link to='/pages/products/manage-product' replace >Remove Selected</Link>
               </Button>
             }
            </Affix>

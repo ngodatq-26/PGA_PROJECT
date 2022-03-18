@@ -1,9 +1,11 @@
 import {IApiGetUsers,IApiCreateUser,IUserList} from "../../../models/user";
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
+import { IDelete } from "../../../models/common";
 
 export interface UserState {
     userlist? : IUserList[],
     apigetusers : IApiGetUsers,
+    deletelist? : IDelete[]
 }
 
 export const initUserState : UserState ={
@@ -25,6 +27,11 @@ export const initUserState : UserState ={
         tz: 7,
     }
 }
+
+export const setApiDeleteUserAction = createCustomAction('deletelist/setApiDeleteUserAction' ,(data : IDelete[]) =>({
+    data,
+}));
+
 export const setApiGetUsers = createCustomAction('apigetusers/setApiGetUsers',(data : IApiGetUsers) =>({
     data,
 }));
@@ -33,12 +40,14 @@ export const setUserList = createCustomAction('userlist/setUserList',(data : IUs
     data
 }));
 
-const actions = {setApiGetUsers,setUserList} ;
+const actions = {setApiGetUsers,setUserList,setApiDeleteUserAction} ;
 
 type Action = ActionType<typeof actions>;
 
 export default function reducer (state : UserState = initUserState ,action : Action) {
     switch(action.type) {
+        case getType(setApiDeleteUserAction):
+            return ({...state, deletelist : action.data})
         case getType(setApiGetUsers):
             return ({...state, apigetusers : action.data});
         case getType(setUserList) :

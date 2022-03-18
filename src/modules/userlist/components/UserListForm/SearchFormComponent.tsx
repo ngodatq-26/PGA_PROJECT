@@ -1,7 +1,6 @@
 import { Box, Button, FormControlLabel, TextField } from '@mui/material';
 import React, { useCallback, useEffect } from 'react'
-import { CustomSelect, renderValue, StyledOption } from '../../../common/components/SelectionMui'
-import '../../styles/UserListStyle.css';
+import { CustomSelect, renderValue, StyledOption } from '../../../common/components/SelectionMui';
 import { Checkbox, DatePicker, Input, Space } from 'antd';
 import { ICountry, IState } from '../../../../models/common';
 import { fetchThunk } from '../../../common/redux/thunk';
@@ -15,6 +14,7 @@ import { Select } from 'antd';
 import { TypeStatus } from '../../utils/utils';
 import { Radio } from 'antd';
 import { IApiGetUsers } from '../../../../models/user';
+import '../../styles/UserListStyle.css';
 
 const { Option,OptGroup } = Select;
 

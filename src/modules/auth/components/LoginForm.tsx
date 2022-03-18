@@ -22,9 +22,9 @@ const LoginForm = (props: Props) => {
   const { onLogin, loading, errorMessage } = props;
 
 
-  const onSubmit = React.useCallback(() => {
+  const onSubmit = () => {
     onLogin(formik.values.email,formik.values.password);
-  }, [onLogin]);
+  }
 
   const formik = useFormik({
       initialValues: {

@@ -20,7 +20,6 @@ function getBaseUrl(service: APIService) {
 
 export const API_PATHS = {
   signIn: `https://api.gearfocus.div4.pgtest.co/api/authentication/login`,
-  userProfile: `${getBaseUrl(APIService.public)}/user`,
   productList : getBaseUrl(APIService.public) + '/api/products/list',
   createProduct : getBaseUrl(APIService.public) + '/api/products/list',
   userList : getBaseUrl(APIService.public) + '/apiAdmin/users/list',
@@ -32,5 +31,7 @@ export const API_PATHS = {
   conditionList : getBaseUrl(APIService.public) + '/apiAdmin/conditions/list',
   shippingList : getBaseUrl(APIService.public) + '/apiAdmin/shipping/list',
   roleList : getBaseUrl(APIService.public) + '/apiAdmin/commons/role',
-  productEdit : getBaseUrl(APIService.public) + '/apiAdmin/products/edit'
+  productEdit : getBaseUrl(APIService.public) + '/apiAdmin/products/edit',
+  userEdit : getBaseUrl(APIService.public) + '/apiAdmin/users/edit',
+  userCreate : getBaseUrl(APIService.public) + '/apiAdmin/users/create'
 };

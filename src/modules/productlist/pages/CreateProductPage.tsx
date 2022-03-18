@@ -2,6 +2,7 @@ import React from 'react';
 import MenuHeaderComponent from '../../common/components/MenuHeaderComponent';
 import CreateProductForm from '../components/CreateProduct/CreateProductForm';
 import '../styles/styleCreateProduct.css'
+import 'antd/dist/antd.css';
 
 const CreateProductPage = () =>{
     return (

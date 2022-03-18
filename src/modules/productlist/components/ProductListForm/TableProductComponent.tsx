@@ -20,7 +20,6 @@ const TableForm = (propFormTable : PropFormTable) =>{
 
     const [deleteList,setDeleteList] = React.useState<Array<IDelete>>([]);
 
-    console.log(deleteList);
     const {data}= propFormTable;
 
 

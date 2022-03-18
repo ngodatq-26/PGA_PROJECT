@@ -20,6 +20,7 @@ import { ListItemButton } from '@mui/material';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import '../Styles/styles.css'
 
 const drawerWidth = 240;
 
@@ -98,7 +99,7 @@ const MenuHeaderComponent = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Box > 
+    <Box style={{maxWidth : '100%',display:'flex'}}> 
       {/* appbar header web*/}
       <AppBar position="fixed" open={open} sx={{backgroundColor :'#323259',height:'80px'}} className="appbar" >
         <Toolbar>

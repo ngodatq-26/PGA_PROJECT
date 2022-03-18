@@ -15,11 +15,11 @@ export interface IUser {
 }
 
 export interface IApiCreateUser {
-   access_level : string,
-   confirm_password : string,
-   email : string,
+   access_level : string ,
+   confirm_password : string ,
+   email : string | null,
    firstName : string,
-   forceChangePassword : 1,
+   forceChangePassword : number,
    lastName : string,
    membership_id : string,
    password : string,

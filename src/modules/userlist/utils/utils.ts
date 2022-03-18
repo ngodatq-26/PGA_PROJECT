@@ -91,3 +91,36 @@ export const TypeStatus : Search[] = [
         value : 'U'
     }
 ]
+
+export const CreateTypeUser : Search[] = [
+    {
+        label : 'Individual',
+        value : 'ndividual'
+    },
+    {
+        label : 'Business',
+        value : 'business'
+    }
+]
+
+export const createAcessLevelUser : Search[] = [
+    {
+        label :'Admin',
+        value : '100'
+    },
+    {
+        label :'Vendor',
+        value : '10'
+    }
+]
+
+export const membership : Search[] = [
+    {
+        label :'Ignore Membership',
+        value : ''
+    },
+    {
+        label :'General',
+        value : '4'
+    }
+]

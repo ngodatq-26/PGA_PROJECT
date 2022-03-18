@@ -20,20 +20,6 @@ function App() {
     user: state.profile.user,
   }));
 
-  const getProfile = React.useCallback(async () => {
-    const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
-
-    if (accessToken && !user) {
-      const json = await dispatch(fetchThunk(API_PATHS.userProfile));
-      if (json?.code === RESPONSE_STATUS_SUCCESS) {
-        dispatch(setUserInfo({ ...json.data, token: accessToken }));
-      }
-    }
-  }, [dispatch, user]);
-
-  React.useEffect(() => {
-    getProfile();
-  }, [getProfile]);
 
   const [country,setCountry] = React.useState<Array<ICountry>>([]);
   const [category,setCategory] = React.useState<Array<ICategory>>([]);

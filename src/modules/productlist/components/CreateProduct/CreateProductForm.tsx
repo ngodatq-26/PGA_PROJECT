@@ -2,10 +2,15 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { ValidationSchema } from '../../utils/valid';
 import {Formik} from 'formik';
-import { Box, Button, Checkbox, FormHelperText, MenuItem, Select, Switch, TextField } from '@mui/material';
+import { FormHelperText } from '@mui/material';
 import {Editable, Slate} from 'slate-react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Button, Checkbox, Input, Select } from 'antd';
+import { Link } from 'react-router-dom';
+import 'antd/dist/antd.css';
+
+const { Option } = Select;
 
 const CreateProductForm = () =>{
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -21,144 +26,88 @@ const CreateProductForm = () =>{
     });
 
     return (
-        <form onSubmit={formik.handleSubmit} 
-         className="card-header create-product-form" 
-         style={{width:'100%',
-         display : 'flex',
-         flexDirection : 'column',
-         justifyContent: 'center',
-         alignItems: 'center',
-        }}
-         >
-            <div> 
+        <form className ="form-create" >
+            <Button type="primary" style ={{marginLeft : '40px',marginTop :'30px'}} shape="circle" > <Link to="/pages/users/manage-user" ><ArrowBackIcon sx={{color:'#fff'}}/></Link></Button>
+            <div className='form-create-div1'>
+                <label className="title" style={{width : '100%'}}>Create Profile</label>
+                <label className="text" style={{width : '100%'}}>Email & password</label>
                 <div>
-                    <div><Button variant='contained' href="/pages/products/manage-product"><ArrowBackIcon /></Button></div>
-                    <div style={{color:'white',fontSize :'2rem',fontFamily :'sans-serif'}}>Add Product</div>
-                </div>    
-                <div className="field-form">
-                    <label style={{color:'white'}}>Vendor</label>
-                    <input id="outlined-basic" type="email"
-                               className="form-control"
-                                name="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                placeholder ="Type Vendor name to select"
-                    ></input>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>Product Title</label>
-                    <input id="outlined-basic" type="email"
-                               className="form-control"
-                                name="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                
-                    ></input>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>Brands</label>
-                    <select
-                        className='form-select'
-                        name="email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                    >
-                        <option value={10}> 10</option>
                         
-                    </select>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
+                        <label>First Name</label>
+                        <div>
+                            <Input></Input>
+                        </div>
                 </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>Condition</label>
-                    <select
-                        className='form-select'
-                        name="email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                    >
-                        <option value={10}> 10</option>
+                <div>
+                        <label>Last Name</label>
+                        <div>
+                             <Input></Input>
+                        </div>
+ 
+                </div>
+                <div>
                         
-                    </select>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>Error</FormHelperText>) : null }
+                        <label>Email</label>
+                        <div>
+                            <Input></Input>
+                        </div>
                 </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>SKU</label>
-                    <input id="outlined-basic" type="email"
-                               className="form-control"
-                                name="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                
-                    ></input>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>Images</label>
-                    <Box component="span" sx={{ p: 2, border: '1px dashed grey' }}>
-                        <Button><CameraAltIcon /></Button>
-                    </Box>
-                </div>
-                <div className="field-form">
-                    <label style={{color:'white'}}>Category</label>
-                    <select
-                        className='form-select'
-                        name="email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                    >
-                        <option value={10}> 10</option>
+                <div>
                         
-                    </select>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
+                        <label>Password</label>
+                        <div>
+                            <Input></Input>
+                        </div>
                 </div>
-                <div className="field-form">
+                <div>
+                        
+                        <label>Confirm Password</label>
+                        <div>
+                            <Input></Input>
+                        </div>
+                </div>
+                <div>               
+                        <label>Type</label>
+                        <Select style={{width : '400px',margin :'0px'}}>
+                              <Option value="lucy">Lucy</Option>
+                        </Select>
+                </div>
+            </div>
+            <div style={{backgroundColor : '#323259' ,height:'30px'}}></div>
+            <div className='form-create-div1'>
+            <label className="text" style={{width : '100%'}}>Acess information</label>
+                <div>               
+                        <label>Acess Level</label>
+                        <Select style={{width : '400px',margin :'0px'}}>
+                              <Option value="lucy">Lucy</Option>
+                        </Select>
+                </div>
+                <div>               
+                        <label>Memberships</label>
+                        <Select style={{width : '400px',margin :'0px'}}>
+                              <Option value="lucy">Lucy</Option>
+                        </Select>
+                </div>
+                <div>
+                        <label>Require to change password on next log in</label>
+                        <div>
+                            <Checkbox></Checkbox>
+                        </div>
+                </div>
+            </div>
+            <div style={{backgroundColor : '#323259' ,height:'30px'}}></div>
+            <div className='form-create-div1'>
+            <label className="text" style={{width : '100%'}}>Tax information</label>
+                <div>   
+                    <label>Tax exempt</label>
                     <div>
-                       <label style={{color:'white'}}>Description</label>
+                            <Checkbox></Checkbox>
                     </div>
-                    <input id="outlined-basic" type="email"
-                               className="form-control"
-                                name="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                
-                    ></input>
-                    {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                </div>
-                <div className="field-form">
-                    <div>
-                       <label style={{color:'white'}}>Available for sale</label>
-                    </div>
-                   <Switch {...label} defaultChecked />
                 </div>
             </div>
             <div>
-                 <div style={{color:'white',fontSize :'2rem',fontFamily :'sans-serif'}}>Add Product</div>
-                 <div className="field-form">
-                        <label style={{color:'white'}}>Category</label>
-                        <select
-                            className='form-select'
-                            name="email"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.email}
-                        >
-                            <option value={10}> 10</option>
-                            
-                        </select>
-                        {formik.touched.email && Boolean(formik.errors.email) ? (<FormHelperText sx={{color:'red'}}>{formik.errors.email}</FormHelperText>) : null }
-                 </div>
+                
             </div>
-
         </form>
     )
 }

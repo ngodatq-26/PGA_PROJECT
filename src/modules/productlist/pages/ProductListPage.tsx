@@ -50,7 +50,7 @@ const ProductListPage = () =>{
         
         <div style ={{marginTop :'80px'}}>
            <SearchFormComponent api ={api} setApi ={setApi}/>
-           <div style={{ margin:'30px'}}>
+           <div style={{ margin:'60px'}}>
                     <div style={{marginBottom : '30px'}}>
                         <Button variant='contained' ><Link style={{color:'white'}} to ="/pages/products/new-product">Add Products</Link></Button>
                     </div>

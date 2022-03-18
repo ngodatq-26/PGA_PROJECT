@@ -16,7 +16,8 @@ import {ICountry, IState} from '../../../models/common'
 import { Box, Button, Paper, Table, TableContainer } from '@mui/material';
 import {setApiGetUsers} from '../redux/userReducer';
 import { Link } from 'react-router-dom';
-import '../styles/UserListStyle.css'
+import '../styles/UserListStyle.css';
+
 const UserListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const [apiGetUser,setApiGetUser] = React.useState<IApiGetUsers>(initUserState.apigetusers);
@@ -39,13 +40,13 @@ const UserListPage = () =>{
 
    
     return (
-        <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
+    <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
             
         <MenuHeaderComponent />
         
         <div style ={{marginTop :'80px'}}>
            <SeacrhFormComponent api={apiGetUser} setApi = {setApiGetUser} />
-           <div style={{ margin:'30px'}}>
+           <div style={{ margin:'60px'}}>
            <div style={{marginBottom : '30px'}}>
                 <Button variant='contained' ><Link style={{color:'white'}} to= '/pages/user/new-user'>Add User</Link></Button>
             </div>

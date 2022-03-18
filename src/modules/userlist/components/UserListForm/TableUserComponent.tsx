@@ -1,5 +1,6 @@
 import { Box, Paper, Table, TableBody, TableContainer } from '@mui/material'
 import React from 'react';
+import { IDelete } from '../../../../models/common';
 import { IUserList } from '../../../../models/user';
 import EnhancedTableHead from './EnhancedTableHead';
 import TableRowComponent from './TableRowComponent';
@@ -10,14 +11,17 @@ interface Props {
 
 const TableUserComponent = (props : Props) => {
 
-  const {data} = props;
+  const [deleteList,setDeleteList] = React.useState<Array<IDelete>>([]);
+
+  console.log(deleteList);
+  const {data} = props
  
   return (
 
                 <TableBody>
                     {
                         data.map((e,index : number) => (
-                               <TableRowComponent  key ={index} user ={e} />
+                               <TableRowComponent  key ={index} user ={e} deleteList={deleteList} setDeleteList={setDeleteList} />
                             )
                         )
                     }
