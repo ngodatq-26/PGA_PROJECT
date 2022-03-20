@@ -1,6 +1,6 @@
 import { FormHelperText } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ValidationSchema } from '../../utils/valid';
 import {createAcessLevelUser, CreateTypeUser, membership} from '../../utils/utils'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -37,6 +37,16 @@ const CreateUserForm = () =>{
       },
     });
 
+    const [check,setCheck] = React.useState(false);
+
+    useEffect(() =>{
+        if(formik.values.firstname !== "" && formik.isValid === true ) {
+            setCheck(true);
+        } else {
+            setCheck(false);
+        }
+    },[formik.isValid])
+
     const role = useSelector((state: AppState) => 
         state.common.role
     )
@@ -47,9 +57,6 @@ const CreateUserForm = () =>{
     const [accessLevel,setAccessLevel] = React.useState("10");
     const [roleType,setRoleType] = React.useState<Array<string> | undefined>(undefined);
     const [membershipId,setMembershipId] = React.useState("");
-
-    console.log(formik.isValid);
- 
 
     const fetchCreateUser = React.useCallback(async () =>{
         const json = await dispatch(fetchThunk(API_PATHS.userCreate,'post',{
@@ -65,8 +72,12 @@ const CreateUserForm = () =>{
             taxExempt: tax,
             roles : roleType
         }));
-    },[]);
-    
+        if(json.success == true) {
+            window.location.replace('/pages/users/manage-user')
+        } else {
+            alert('loi')
+        }
+    },[formik.values]);
 
     const handleChangeType = (value : any) =>{
         setType(value);
@@ -99,8 +110,6 @@ const CreateUserForm = () =>{
     const handleChangeRoles = (value : any) =>{
         setRoleType(value);
     }
-
-    console.log(tax);
 
     const handleClick = () =>{
         fetchCreateUser();
@@ -242,7 +251,7 @@ const CreateUserForm = () =>{
                 </div>
             </div>
             <div style={{backgroundColor : '#323259' ,height:'30px'}}></div>
-            <CreateLabelForm fetchCreateUser = {fetchCreateUser} />
+            <CreateLabelForm fetchCreateUser = {fetchCreateUser} check={check} />
         </form>
     )
 }

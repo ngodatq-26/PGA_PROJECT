@@ -3,6 +3,7 @@ import * as yup from 'yup';
 export const ValidationSchema = yup.object({
   firstname : yup 
     .string()
+    .notOneOf(['1'],'First Name is Required')
     .required('First Name is Required'),
   lastname : yup 
      .string()
