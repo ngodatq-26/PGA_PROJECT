@@ -26,6 +26,11 @@ const DeleteForm = (props : Props) => {
   
   const fetchDelete = useCallback(async () =>{
     const json = await dispatch(fetchThunk(API_PATHS.userEdit,'post',{params : Redux_DeleteList}));
+    if(json.success === true) {
+      window.location.replace('/pages/users/manage-user');
+    } else {
+      alert('loi')
+    }
   },[Redux_DeleteList]);
 
   const Click = () =>{
