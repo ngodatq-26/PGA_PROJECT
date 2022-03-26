@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableHead,TableRow,TableCell,Checkbox,TableSortLabel } from '@mui/material';
+import { TableHead,TableRow,TableCell,TableSortLabel } from '@mui/material';
 import {HeadCell} from '../../../../models/common';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -8,18 +8,22 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppState } from '../../../../redux/reducer';
 import { Action } from 'redux';
 import { headCells } from '../../utils/utils';
-import { IApiGetProduct } from '../../../../models/product';
+import { IApiGetProduct, IProduct } from '../../../../models/product';
+import { Checkbox } from 'antd';
+import { setDeleteProductAction, setNextDeleteProduct, setProductAction } from '../../redux/productReducer';
 
 interface Props {
     api : IApiGetProduct;
     setApi(a : IApiGetProduct) : void
+    data? : IProduct[];
 }
 
 const EnhancedTableHead  = (props : Props) =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const Redux_ApiGetProduct = useSelector((state : AppState) => state.productlist.apigetproduct);
+    const Redux_ProductList = useSelector((state : AppState) => state.productlist.deletelist);
 
-    const {api,setApi} = props 
+    const {api,setApi,data} = props 
     
     const onSort = (name : string)=>{
         if(api.order_by === 'ASC') {
@@ -27,12 +31,22 @@ const EnhancedTableHead  = (props : Props) =>{
         } else {
          setApi({...api,sort : name,order_by : 'ASC'})
         }
-     }
+    }
+
+    const handleCheckAll = (e : any) =>{
+        if(e.target.checked) {
+        data?.map((e,index : number) =>{
+            dispatch(setNextDeleteProduct(e.id,1));
+        })}
+        else {
+            dispatch(setDeleteProductAction([]));
+        }
+    }
+
     return (
             <TableHead>
                 <TableRow>
                     <TableCell>
-                        <Checkbox />
                     </TableCell>
                     {
                         headCells.map((HeadCell,index : number) =>(

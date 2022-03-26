@@ -49,7 +49,7 @@ export interface IApiGetUsers {
 export interface IUserList {
   access_level: string
   created: string
-  fistName: string
+  fistName: string | null
   lastName: string
   last_login: string
   order: IOrder
@@ -64,4 +64,52 @@ export interface IUserList {
 export interface IOrder  {
   order_as_buyer: number, 
   order_as_buyer_total: number
+}
+
+export interface account_roles {
+  id: string
+  name: string
+}
+
+export interface account_status {
+  D: string
+  E: string
+  U: string
+}
+
+export interface info {
+  access_level: string
+companyName: null | string
+default_card_id: string
+earning: number
+email: string
+expense: string
+firstName: null | string
+first_login: null | string
+forceChangePassword: string
+income: null | string
+joined: null | string
+language: string
+lastName:  string
+last_login: null | string
+membership_id: null | string
+order_as_buyer: number
+order_as_buyer_total: number
+paymentRailsId: null | string
+paymentRailsType: string
+pending_membership_id: null | string
+products_total: string
+profile_id: string
+referer: string
+roles: string[]
+status: string
+statusComment: string
+taxExempt: string
+vendor_id: string
+}
+
+export interface IInfoUser {
+  account_roles : account_roles
+  account_status : account_status
+  info : info
 }

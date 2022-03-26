@@ -37,3 +37,58 @@ export interface IApiSearchProduct {
     stock_status : string ,
     vendor : string | null
 }
+
+export interface Cate {
+    category_id: string
+    name: string
+}
+
+export interface Image {
+    file: string
+    id: string
+    thumbs : Array<string>
+}
+
+export interface Member {
+    membership_id: string
+}
+export interface IInfoProduct{
+        arrival_date: string,
+        brand_id: string,
+        categories: Cate[]
+        cleanURL: string
+        code: string
+        condition_id: string
+        description: string
+        enabled: string
+        facebook_marketing_enabled: string
+        google_feed_enabled: string
+        id: string
+        images: Image[]
+        inventory_tracking: string
+        memberships: Member[]
+        meta_desc_type: string
+        meta_description: string
+        meta_keywords: string
+        name: string
+        og_tags: string                  
+        og_tags_type: string
+        participate_sale :string
+        price: string
+        product_page_title: string
+        quantity: string
+        sale_price: string
+        sale_price_type: string
+        shipping: Ship[]
+        sku: string
+        sort_description: string
+        tax_exempt: string
+        vendor_id: string
+        weight: string
+}
+
+export interface Ship {
+    id: string,
+    zone_name: string, 
+    price: string
+}

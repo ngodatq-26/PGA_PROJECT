@@ -36,6 +36,9 @@ label {
     width: 100px;
 }
 
+.ant-form-item-label>label {
+    color: #fff;
+}
 .title {
     margin-left: -200px;
     margin-bottom: 20px;

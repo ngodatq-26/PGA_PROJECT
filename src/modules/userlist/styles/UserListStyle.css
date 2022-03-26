@@ -39,3 +39,15 @@ body {
     z-index: 2
 }
 
+.text-link {
+    color: #007bff!important;
+    cursor: pointer;
+}
+
+.text-none {
+    color: #fff!important;
+    font-family: Open Sans,sans-serif;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.25rem
+}

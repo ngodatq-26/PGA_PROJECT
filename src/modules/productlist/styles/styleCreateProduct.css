@@ -68,3 +68,12 @@ label {
     display: flex !important;
     flex-direction: column !important;
 }
+
+.tox-statusbar {
+    display: none !important;
+}
+
+.ant-select-selection-overflow {
+    width : 400px;
+    height : 20px;
+}

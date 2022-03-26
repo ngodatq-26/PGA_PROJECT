@@ -11,11 +11,11 @@ import { Box, Button } from '@mui/material';
 import {Avaibility, checkboxSearch,Stock_Status} from '../../utils/utils'
 import 'antd/dist/antd.css';
 import '../../styles/styleSearch.css'
-
 import { Select,Input,Checkbox } from 'antd';
 import { IVendor } from '../../../../models/common';
 import { API_PATHS } from '../../../../configs/api';
 import { fetchThunk } from '../../../common/redux/thunk';
+import { CaretDownOutlined } from '@ant-design/icons';
 
 interface Props {
     api : IApiGetProduct;

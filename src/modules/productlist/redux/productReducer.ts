@@ -21,8 +21,10 @@ export const initProductState : ProductState ={
         sort:"name",
         order_by:"ASC",
         search_type:""
-    }
+    },
+    deletelist : []
 }
+
 
 export const setDeleteProductAction = createCustomAction('deletelist/setDeleteProductAction',(data : IDelete[]) =>({
     data,
@@ -54,7 +56,11 @@ export const setApiSearchProduct = createCustomAction('apigetproduct/setSeacrchA
     searchForm
 }))
 
-const actions = {setDeleteProductAction,setApiSearchProduct,setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
+export const setNextDeleteProduct = createCustomAction('deletelist/setNextDeleteProduct',(id : string,del :number) =>({
+    id,del
+}))
+
+const actions = {setNextDeleteProduct,setDeleteProductAction,setApiSearchProduct,setProductAction,setApiGetProduct,setApiPageProduct,setApiCountProduct,setApiSortProduct} ;
 
 type Action = ActionType<typeof actions>;
 
@@ -80,7 +86,9 @@ export default function reducer (state : ProductState = initProductState ,action
                 search_type : action.searchForm.search_type,
                 stock_status : action.searchForm.stock_status,
                 vendor : action.searchForm.vendor,
-            }})
+            }});
+        case getType(setNextDeleteProduct) :
+            return ({...state,deletelist : state.deletelist?.concat({id : action.id,delete : action.del})});
         default :
             return state;
     }

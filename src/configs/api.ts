@@ -33,5 +33,9 @@ export const API_PATHS = {
   roleList : getBaseUrl(APIService.public) + '/apiAdmin/commons/role',
   productEdit : getBaseUrl(APIService.public) + '/apiAdmin/products/edit',
   userEdit : getBaseUrl(APIService.public) + '/apiAdmin/users/edit',
-  userCreate : getBaseUrl(APIService.public) + '/apiAdmin/users/create'
+  userCreate : getBaseUrl(APIService.public) + '/apiAdmin/users/create',
+  userDetail : getBaseUrl(APIService.public) + '/apiVendor/profile/detail',
+  productCreate : getBaseUrl(APIService.public) + '/apiAdmin/products/create',
+  productDetail : getBaseUrl(APIService.public) + '/apiAdmin/products/detail',
+  UploadImage : getBaseUrl(APIService.public) + '/api/products/upload-image'
 };

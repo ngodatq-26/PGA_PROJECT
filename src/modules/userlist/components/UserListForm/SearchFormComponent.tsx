@@ -82,7 +82,6 @@ const SearchFormComponent = (props : Props) => {
     setApi({...api,date_range : dateRange,date_type : dateType ,search : search,memberships : membership,types : types,status : status,country : countrySearch,state : stateSearch,address : address,phone : phone});
   }
 
-  console.log(country);
 
   const fetchState  = useCallback(async(code) =>{
     const json = await dispatch(fetchThunk(API_PATHS.state,'post',{code}));

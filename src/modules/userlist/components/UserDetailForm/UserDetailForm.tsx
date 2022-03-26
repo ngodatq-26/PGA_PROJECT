@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import { ValidationSchema } from '../../utils/valid';
 import {createAcessLevelUser, CreateTypeUser, membership} from '../../utils/utils'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button, Checkbox, Form, Input, notification, Select } from 'antd';
 import 'antd/dist/antd.css';
 import '../../styles/CreateUserStyle.css'
@@ -17,31 +17,34 @@ import { Action } from 'redux';
 import { API_PATHS } from '../../../../configs/api';
 import { fetchThunk } from '../../../common/redux/thunk';
 import { IAdministrator } from '../../../../models/common';
+import UpdateLabelForm from './UpdateLabelForm';
 
+const { TextArea } = Input;
 const { Option } = Select;
 interface Props {
     data? : info
-    setLoading(e : boolean) : void
+    setLoading(a : boolean) : void
 }
 
 const CreateUserForm = (props : Props) =>{
-
-    const openNotification = (placement : any,message : string,desc : string) => {
+    const openNotification = (placement : any) => {
         notification.info({
-          message: message,
+          message: `Update User`,
           description:
-            desc,
+            'Update Successfully',
           placement,
         });
     };
+
+    const routes  = useParams();
     const {data,setLoading} = props;
 
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const formik = useFormik({
         initialValues :{
-            firstname: '',
-            lastname :'',
-            email : '',
+            firstname: data?.firstName ? data.firstName : '',
+            lastname :data?.lastName,
+            email : data?.email,
             password : '',
             confirmpassword :'',
         },
@@ -65,35 +68,38 @@ const CreateUserForm = (props : Props) =>{
         state.common.role
     )
     
-    const [type,setType] = React.useState("individual");
-    const [changePassword,setChangePassword] = React.useState(0);
-    const [tax,setTax] = React.useState(0);
-    const [accessLevel,setAccessLevel] = React.useState("10");
-    const [roleType,setRoleType] = React.useState<Array<string> | undefined>(undefined);
-    const [membershipId,setMembershipId] = React.useState("");
+    const [type,setType] = React.useState(data?.paymentRailsType);
+    const [changePassword,setChangePassword] = React.useState(data?.forceChangePassword);
+    const [tax,setTax] = React.useState(data?.taxExempt);
+    const [accessLevel,setAccessLevel] = React.useState(data?.access_level);
+    const [roleType,setRoleType] = React.useState<Array<string> | undefined>(data?.roles);
+    const [membershipId,setMembershipId] = React.useState(data?.membership_id);
+    const [status,setStatus] = React.useState(data?.status);
+    const [statusComment,setStatusComment] = React.useState(data?.statusComment);
 
-    const fetchCreateUser = React.useCallback(async () =>{
-        setLoading(true)
-        const json = await dispatch(fetchThunk(API_PATHS.userCreate,'post',{
-            access_level: accessLevel,
+    const fetchCreateUser = async () =>{
+        setLoading(true);
+        const json = await dispatch(fetchThunk(API_PATHS.userEdit,'post',{params : [{
             confirm_password: formik.values.confirmpassword,
             email: formik.values.email,
             firstName: formik.values.firstname,
             forceChangePassword: changePassword,
             lastName: formik.values.lastname,
-            membership_id: membershipId,
+            membership_id: "",
             password: formik.values.password,
-            paymentRailsType: type,
+            roles: roleType,
+            status: status,
+            statusComment: statusComment,
             taxExempt: tax,
-            roles : roleType
-        }));
+            id : Object.values(routes)[0]
+        }]}));
+        setLoading(false);
         if(json.success == true) {
-            openNotification('bottom','Succesfully',"Create User successfully")
+            openNotification('bottom')
         } else {
-            openNotification('bottom','error',json.errors)
+            alert('loi');
         }
-        setLoading(false)
-    },[formik.values]);
+    } 
 
     const handleChangeType = (value : any) =>{
         setType(value);
@@ -109,17 +115,17 @@ const CreateUserForm = (props : Props) =>{
     
     const handleChangeForcePassword = (e : any) =>{
         if(e.target.checked) {
-            setChangePassword(1);
+            setChangePassword("1");
         } else {
-            setChangePassword(0);
+            setChangePassword("0");
         }
     }
 
     const handleChangeTax = (e : any) =>{
         if(e.target.checked) {
-            setTax(1);
+            setTax("1");
         } else {
-            setTax(0);
+            setTax("0");
         }
     }
 
@@ -127,22 +133,17 @@ const CreateUserForm = (props : Props) =>{
         setRoleType(value);
     }
 
-    const handleClick = () =>{
-        fetchCreateUser();
-    }
-
     return (
         <Form className ="form-create" >
             <Button type="primary" style ={{marginLeft : '40px',marginTop :'30px'}} shape="circle" > <Link to="/pages/users/manage-user" ><ArrowBackIcon sx={{color:'#fff'}}/></Link></Button>
             <div className='form-create-div1'>
-                <label className="title" style={{width : '100%'}}>Create Profile</label>
+                <label className="title" style={{width : '100%'}}>{data?.email}</label>
                 <label className="text" style={{width : '100%'}}>Email & password</label>
                 <div>
                         
-                        <label>First Name<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>First Name</label>
                         <div className="valid-form">
                            <Input 
-                               defaultValue='haha'
                                 name='firstname'
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -152,7 +153,7 @@ const CreateUserForm = (props : Props) =>{
                         <div></div>
                 </div>
                 <div>
-                        <label>Last Name<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Last Name</label>
                         <div className="valid-form">
                              <Input
                              name="lastname"
@@ -166,7 +167,7 @@ const CreateUserForm = (props : Props) =>{
                 </div>
                 <div>
                         
-                        <label>Email<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Email</label>
                         <div className="valid-form">
                             <Input
                             name="email"
@@ -179,7 +180,7 @@ const CreateUserForm = (props : Props) =>{
                 </div>
                 <div>
                         
-                        <label>Password<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Password</label>
                         <div className="valid-form">
                             <Input type="password"
                             name="password"
@@ -192,7 +193,7 @@ const CreateUserForm = (props : Props) =>{
                 </div>
                 <div>
                         
-                        <label>Confirm Password<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Confirm Password</label>
                         <div className="valid-form">
                             <Input type="password"
                             name="confirmpassword"
@@ -204,13 +205,11 @@ const CreateUserForm = (props : Props) =>{
                 </div>
                 <div>               
                         <label>Type</label>
-                        <Select style={{width : '400px',margin :'0px'}} defaultValue = "Individual" onChange={handleChangeType}>
-                            {
-                                CreateTypeUser.map((e,index : number) =>(
-                                    <Option key={index} value={e.value} label={e.label}>{e.label}</Option>
-                                ))
-                            }
-                        </Select>
+                        <div><label>{data?.paymentRailsType}</label></div>
+                </div>
+                <div>               
+                        <label>PaymentRails Id</label>
+                        <div><label>{data?.paymentRailsId}</label></div>
                 </div>
             </div>
             <div style={{backgroundColor : '#323259' ,height:'30px'}}></div>
@@ -218,28 +217,33 @@ const CreateUserForm = (props : Props) =>{
             <label className="text" style={{width : '100%'}}>Acess information</label>
                 <div>               
                         <label>Acess Level</label>
-                        <Select style={{width : '400px',margin :'0px'}}defaultValue ="Vendor" 
-                         onChange = {handleChangeAccessLevel} >
-                            {
-                                createAcessLevelUser.map((e,index : number) =>(
-                                    <Option key={index} value={e.value} label={e.label}>{e.label}</Option>
-                                ))
-                            }
-                        </Select>
+                        <div>{data?.access_level === "100" ? <label>Admin</label> : <label>Vendor</label>}</div>
                 </div>
                 {
-                    (accessLevel === "100") ? (
+                    (data?.access_level === "100") ? (
                         <div>               
                                 <label>Roles</label>
-                                <Select style={{width : '400px',margin :'0px'}}  mode="tags" onChange ={handleChangeRoles} >
+                                <Select style={{width : '400px',margin :'0px'}} defaultValue={data.roles} mode="tags" onChange ={handleChangeRoles} >
                                     { role ? role.administrator.map((e : IAdministrator,index : number) =>(
-                                        <Option key={index} value={e.id} >{e.name}</Option>
+                                        <Option key={index} value={e.id} label={e.name} >{e.name}</Option>
                                         )) : null
                                     }
                                 </Select>
                         </div>
                     ) : null
                 }
+                <div>
+                        <label>Roles</label>
+                        <Select style={{width : '400px',margin :'0px'}} defaultValue={data?.status}>
+                            <Option value="D">Disable</Option>
+                            <Option value="E">Enable</Option>
+                            <Option value="U">Unapproved vendor</Option>
+                        </Select>
+                </div>
+                <div>
+                    <label>Status comment</label>
+                    <div><TextArea rows={4} cols={90} /></div>
+                </div>
                 <div>               
                         <label>Memberships</label>
                         <Select style={{width : '400px',margin :'0px'}} defaultValue = "Ignore Membership" onChange = {handleChangeMembership} >
@@ -251,9 +255,17 @@ const CreateUserForm = (props : Props) =>{
                         </Select>
                 </div>
                 <div>
+                    <label>Pending membership</label>
+                    <div>{data?.pending_membership_id ? <label>{data.pending_membership_id}</label> : <label>none</label> }</div>
+                </div>
+                <div>
                         <label>Require to change password on next log in</label>
                         <div>
-                            <Checkbox onChange={handleChangeForcePassword}></Checkbox>
+                            {
+                                data?.forceChangePassword === "0" ?
+                                <Checkbox onChange={handleChangeForcePassword}></Checkbox> :
+                                <Checkbox checked onChange={handleChangeForcePassword}></Checkbox>
+                            }
                         </div>
                 </div>
             </div>
@@ -263,12 +275,12 @@ const CreateUserForm = (props : Props) =>{
                 <div>   
                     <label>Tax exempt</label>
                     <div>
-                            <Checkbox onChange= {handleChangeTax}></Checkbox>
+                        {data?.taxExempt === "0" ? <Checkbox onChange= {handleChangeTax}></Checkbox> : <Checkbox checked onChange= {handleChangeTax}></Checkbox>}    
                     </div>
                 </div>
             </div>
             <div style={{backgroundColor : '#323259' ,height:'30px'}}></div>
-            <CreateLabelForm check={check} fetchCreateUser={fetchCreateUser} />
+            <UpdateLabelForm check={check} fetchUpdateUser={fetchCreateUser} />
         </Form>
     )
 }

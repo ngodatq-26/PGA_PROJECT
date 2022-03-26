@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ValidationSchema } from '../../utils/valid';
 import {Formik} from 'formik';
 import { Box, FormHelperText } from '@mui/material';
@@ -10,7 +10,7 @@ import { Button, Checkbox, DatePicker, Input, notification, Select, Switch, Uplo
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Editor } from '@tinymce/tinymce-react';
-import CreateLabelForm from './CreateLabelForm';
+import UpdateLabelForm from './UpdateLabelForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {Action} from "redux";
@@ -22,17 +22,18 @@ import '../../styles/styleCreateProduct.css';
 import { now } from 'lodash';
 import ImgCrop from 'antd-img-crop';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { ACCESS_TOKEN_KEY } from '../../../../utils/constants';
-import Cookies from 'js-cookie';
+import { IInfoProduct } from '../../../../models/product';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { ACCESS_TOKEN_KEY } from '../../../../utils/constants';
 
 const { Option } = Select;
 interface Props {
-    setLoading(e : boolean) : void
+    data : IInfoProduct
 }
-const CreateProductForm = (props : Props) =>{
+const DetailProductForm = (props : Props) =>{
 
-    const {setLoading} = props;
+    const {data} = props;
     const openNotification = (placement : any,message : string,desc : string) => {
         notification.info({
           message: message,
@@ -42,8 +43,14 @@ const CreateProductForm = (props : Props) =>{
         });
     };
 
+    const fileBegin : any = data.images.map((e,index : number) =>[{
+        url : e.file,
+        id : e.id
+    }])
+
     const [fileList, setFileList] = React.useState<Array<UploadFile>>([]);
-    
+    const [fileListbegin, setFileListBegin] = useState<any>(fileBegin);
+ 
     console.log(!fileList[0]?.originFileObj)
     const onChange = (newFileList : any) => {
         setFileList(newFileList.fileList);
@@ -68,23 +75,23 @@ const CreateProductForm = (props : Props) =>{
     const [check,setCheck] = React.useState(false);
     const [id,setId] = React.useState("");
     const [api,setApi] = React.useState({
-        sku : '1647861967506',
-        enable : 1,
-        membership : [],
+        sku : data.sku,
+        enable : parseInt(data.enabled),
+        membership : data.memberships.map((e) => parseInt(e.membership_id)),
         shippingId : 1,
         tax : 0,
         sale : 0,
-        saleType : '$',
-        salePrice : "",
-        oldTagType : "0",
-        oldTag : "",
-        metaType : "A",
-        metaDesc : "",
-        metaKey : "",
-        pageTitle : "",
-        facebook : 0,
-        google : 0,
-        date : new Date(),
+        saleType : data.sale_price_type,
+        salePrice : data.sale_price,
+        oldTagType : data.og_tags_type,
+        oldTag : data.og_tags,
+        metaType : data.meta_desc_type,
+        metaDesc : data.meta_description,
+        metaKey : data.meta_keywords,
+        pageTitle : data.product_page_title,
+        facebook : parseInt(data.facebook_marketing_enabled),
+        google : parseInt(data.google_feed_enabled),
+        date : data.arrival_date,
         image_name : [] as string[],
     })
 
@@ -112,15 +119,15 @@ const CreateProductForm = (props : Props) =>{
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const formik = useFormik({
         initialValues :{
-            vendors : '',
-            producttitle : '',
-            brands : '',
-            condition : '',
-            categorys :[],
-            description : '',
-            price :'',
-            stock :'',
-            continental :''
+            vendors : data.vendor_id,
+            producttitle : data.name,
+            brands : data.brand_id,
+            condition : data.condition_id,
+            categorys :data.categories.map((e)=>e.category_id),
+            description : data.description,
+            price :data.price,
+            stock :data.quantity,
+            continental :data.shipping[0].price,
         },
        validationSchema : ValidationSchema,
        onSubmit: (values) => {
@@ -171,9 +178,6 @@ const CreateProductForm = (props : Props) =>{
         const json = await axios.post(API_PATHS.productCreate,formData,config)
         if(json.data?.success) {
             setId(json.data.data)
-            openNotification('bottom','Succesfully','create product succesfully')
-        } else {
-            openNotification('bottom','Error',json.data.error)
         }
     },[formik.values]);
     
@@ -294,10 +298,10 @@ const CreateProductForm = (props : Props) =>{
         <form className ="form-create" onSubmit={formik.handleSubmit}>
             <Button type="primary" style ={{marginLeft : '40px',marginTop :'30px'}} shape="circle" > <Link to="/pages/products/manage-product" ><ArrowBackIcon sx={{color:'#fff'}}/></Link></Button>
             <div className='form-create-div1'>
-                <label className="title" style={{width : '100%'}}>Add Product</label>
+                <label className="title" style={{width : '100%'}}>{data.name}</label>
                 <div>
                         
-                        <label>Vendor<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Vendor</label>
                         <div className='valid-form'>
                         <Select style={{width : '400px',margin :'0px'}} placeholder="Search to Select"
                                 className='valid-form'
@@ -318,7 +322,7 @@ const CreateProductForm = (props : Props) =>{
                         </div>
                 </div>
                 <div>
-                        <label>Product Title<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Product Title</label>
                         <div className='valid-form'>
                              <Input value={formik.values.producttitle}
                                 name="producttitle"
@@ -331,7 +335,7 @@ const CreateProductForm = (props : Props) =>{
                 </div>
                 <div>
                         
-                        <label>Brand<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Brand</label>
                         <div className='valid-form'>
                         <Select style={{width : '400px',margin :'0px'}} 
                         
@@ -353,7 +357,7 @@ const CreateProductForm = (props : Props) =>{
                 </div>
                 <div>
                         
-                        <label>Condition<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Condition</label>
                         <div className="valid-form">
                         <Select style={{width : '400px',margin :'0px'}} 
                                 id="condition"
@@ -375,10 +379,18 @@ const CreateProductForm = (props : Props) =>{
                         </div>
                 </div>
                 <div>
-                         <label>image<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                         <label>image</label>
                          
                          <ImgCrop rotate>
                          <Box component="span" sx={{ p: 1, border: '1px dashed grey' }}>
+                                <Upload
+                                    beforeUpload={()=>{return false}}
+                                    action="/"
+                                    listType="picture-card"
+                                    fileList = {fileListbegin} 
+                                    onChange={onChange}
+                                    onPreview={onPreview}
+                                ></Upload>
                                 <Upload
                                     beforeUpload={()=>{return false}}
                                     action="/"
@@ -394,7 +406,7 @@ const CreateProductForm = (props : Props) =>{
                          
                 </div>
                 <div>               
-                        <label>Category<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Category</label>
                         <div className="valid-form">
                         <Select style={{width : '400px',margin :'0px'}} mode="tags" placeholder="Type Categpory name to select" 
                                 id="categorys"
@@ -412,7 +424,7 @@ const CreateProductForm = (props : Props) =>{
                         </div>
                 </div>
                 <div>
-                        <label>Description<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                        <label>Description</label>
                         <div className="valid-form">
                         <Editor
                             apiKey="u085ls4n2xaf1c7cxtvzr3c1nboggnhlo1x3w6f6dtk4enpy"
@@ -447,7 +459,7 @@ const CreateProductForm = (props : Props) =>{
             <label className="title" style={{width : '100%'}}>Prices & Inventory</label>
                 <div>               
                         <label>Memberships</label>
-                        <Select style={{width : '400px !important',margin :'0px'}} defaultValue="General" onChange={handleChangeMembership} mode="multiple" >
+                        <Select style={{width : '400px !important',margin :'0px'}} onChange={handleChangeMembership} mode="multiple" >
                               <Option value={4}>General</Option>
                         </Select>
                 </div>
@@ -459,7 +471,7 @@ const CreateProductForm = (props : Props) =>{
                         </div>
                 </div>
                 <div>
-                       <label>Prices<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                       <label>Prices</label>
                         <div style={{display :'flex',flexDirection :'row'}}>
                             <label>
                             <Input 
@@ -494,8 +506,8 @@ const CreateProductForm = (props : Props) =>{
                     </div>
                 </div>
                 <div>
-                    <label>Quantity in Stock<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
-                    <div className="valid-form" >
+                    <label>Quantity in Stock</label>
+                    <div className="valid-form">
                     <Input 
                          value={formik.values.stock}
                                 name="stock"
@@ -510,7 +522,7 @@ const CreateProductForm = (props : Props) =>{
             <div className='form-create-div1'>
             <label className="title" style={{width : '100%'}}>Shipping</label>
                 <div>   
-                    <label>Continental U.S.<span _ngcontent-gpk-c172="" className="text-danger">*</span></label>
+                    <label>Continental U.S.</label>
                     <div className="valid-form">
                          
                          <Input 
@@ -542,7 +554,7 @@ const CreateProductForm = (props : Props) =>{
                 <div>   
                     <label>Open Graph meta tags</label>
                     <div>
-                        <Select style={{width : '400px',margin :'0px'}} onChange={handleChangeOldTagType} defaultValue="Autogenerated">
+                        <Select style={{width : '400px',margin :'0px'}} onChange={handleChangeOldTagType} defaultValue={api.oldTagType}>
                               <Option value="0">Autogenerated</Option>
                               <Option value="1">Custom</Option>
                         </Select>
@@ -560,7 +572,7 @@ const CreateProductForm = (props : Props) =>{
                 <div>   
                     <label>Meta description</label>
                     <div>
-                        <Select style={{width : '400px',margin :'0px'}} onChange={handleChangeMetaType} defaultValue="Autogenerated">
+                        <Select style={{width : '400px',margin :'0px'}} onChange={handleChangeMetaType} defaultValue={api.metaType}>
                               <Option value="A">Autogenerated</Option>
                               <Option value="C">Custom</Option>
                         </Select>
@@ -591,7 +603,7 @@ const CreateProductForm = (props : Props) =>{
                 </div>
                 <div>
                          <label>Add to Facebook product feed</label>
-                        <Switch onChange = {handleChangeFacebook}/>
+                        <Switch onChange = {handleChangeFacebook} />
                 </div>
                 <div>
                          <label>Add to Google product feed</label>
@@ -599,9 +611,9 @@ const CreateProductForm = (props : Props) =>{
                 </div>
             </div>
             <div style={{backgroundColor : '#323259' ,height:'50px'}}></div>
-            <CreateLabelForm  check={check} fetchCreateProduct = {fetchCreateProduct} />
+            <UpdateLabelForm  check={check} fetchCreateProduct = {fetchCreateProduct} />
         </form>
     )
 }
 
-export default React.memo(CreateProductForm);
+export default React.memo(DetailProductForm);

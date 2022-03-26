@@ -17,38 +17,48 @@ import { Box, Button, Paper, Table, TableContainer } from '@mui/material';
 import {setApiGetUsers} from '../redux/userReducer';
 import { Link } from 'react-router-dom';
 import '../styles/UserListStyle.css';
+import DeleteForm from '../components/UserListForm/DeleteForm';
+import { Modal, Spin } from 'antd';
 
 const UserListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
     const [apiGetUser,setApiGetUser] = React.useState<IApiGetUsers>(initUserState.apigetusers);
     const [data,setData] = React.useState<Array<IUserList>>([]);
-    
+    const [record,setRecord] = React.useState("");
+    const [checkReload,setCheckReload] = React.useState(false);
+    const [loading,setLoading] = React.useState(false);
 
     const fetchUser = useCallback(async () =>{
+        setLoading(true);
         const json = await dispatch(fetchThunk(API_PATHS.userList,'post',apiGetUser));
         if(json.data === false) {
            setData([]);
        } else {
           setData(json.data);
+          setRecord(json.recordsTotal)
           dispatch(setApiGetUsers(apiGetUser))
        }
+       setLoading(false);
    },[apiGetUser]);
    
    useEffect(() => {
        fetchUser();
    },[apiGetUser])
 
-   
     return (
+    
     <div style ={{display : 'flex',backgroundColor :'#1b1b38'}}>
-            
-        <MenuHeaderComponent />
         
-        <div style ={{marginTop :'80px'}}>
+        <MenuHeaderComponent />
+        {loading ?  <Modal visible = {true} footer={null} destroyOnClose={true} ><Spin style={{marginLeft : '225px'}}/></Modal> :
+        <div style ={{marginTop :'80px'}}> 
+           <div style={{ marginLeft:'60px',marginTop :'30px'}}>
+               <h2 style={{color :'white'}}>User</h2>
+           </div>
            <SeacrhFormComponent api={apiGetUser} setApi = {setApiGetUser} />
            <div style={{ margin:'60px'}}>
            <div style={{marginBottom : '30px'}}>
-                <Button variant='contained' ><Link style={{color:'white'}} to= '/pages/user/new-user'>Add User</Link></Button>
+                <Button variant='contained' ><Link style={{color:'white'}} to= '/pages/users/new-user'>Add User</Link></Button>
             </div>
             <Box sx={{ width: '100%',backgroundColor : '#323259' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
@@ -60,9 +70,10 @@ const UserListPage = () =>{
                     </TableContainer>
                 </Paper>
             </Box>
-           <PaginationComponent apiGetUser ={apiGetUser} setApiGetUser ={setApiGetUser} />
-           </div>
-        </div>
+           <PaginationComponent apiGetUser ={apiGetUser} setApiGetUser ={setApiGetUser} record ={record}/>
+           </div> 
+        </div> }
+        <DeleteForm api={apiGetUser} setApi={setApiGetUser} setCheckReload={setCheckReload} />
     </div>
     )
 }

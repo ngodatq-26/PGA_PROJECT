@@ -1,26 +1,28 @@
-import { CheckBox } from '@mui/icons-material';
-import { Checkbox, TableCell, TableRow,Button } from '@mui/material';
+import {  TableCell, TableRow,Button } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IProduct } from '../../../../models/product';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TimeConvert,formatter} from '../../utils/utils';
 import { IDelete } from '../../../../models/common';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppState } from '../../../../redux/reducer';
 import { Action } from 'redux';
 import { setDeleteProductAction, setProductAction } from '../../redux/productReducer';
-
+import { Checkbox } from 'antd';
+import "../../styles/styleProductPage.css"
+import { Link } from 'react-router-dom';
 interface PropTableRow {
     product : IProduct;
     deleteList : IDelete[];
-    setDeleteList (e : IDelete[]) : void
+    setDeleteList (e : IDelete[]) : void;
 }
 
 const TableRowProductComponent = (propTableRow : PropTableRow) =>{
-
+    const Redux_DeleteList = useSelector((state : AppState) => state.productlist.deletelist);
     const {product,deleteList,setDeleteList} = propTableRow;
     
+    const [checkInput,setCheckInput] = React.useState(false);
     const [check,setCheck] = React.useState(false);
 
     const deleteItem : IDelete = {
@@ -44,30 +46,37 @@ const TableRowProductComponent = (propTableRow : PropTableRow) =>{
         }
     },[deleteItem])
 
-    useEffect(()=>{
+    useEffect(()=>{  
         dispatch(setDeleteProductAction(deleteList));
     },[deleteList]);
 
+    const HandleClickCheckBox = (e : any) =>{
+            clickDelete();
+    }
 
+    const checkInputType = (e : any) =>{
+        setCheckInput(!checkInput);
+    } 
+
+    const link="/pages/products/product-detail/" + product.id
     return (
             <TableRow >
-                <TableCell><Checkbox color="primary" 
-                                  inputProps={{'aria-label' : 'select all desserts'}}
+                <TableCell><Checkbox onChange={HandleClickCheckBox} checked={check}
                 /></TableCell>
-                <TableCell align="left">{product?.sku}</TableCell>
+                <TableCell align="left" className="text-none">{product?.sku}</TableCell>
                 <TableCell align="left"
                            sx ={{
                             color: '#007bff!important',
                             cursor: 'pointer'
-                }}><a style={{cursor: 'pointer'}}>{product?.name}</a></TableCell>
-                <TableCell align="left">{product?.category}</TableCell>
-                <TableCell align="left">{formatter.format(parseInt(product.price)) }</TableCell>
-                <TableCell align="left">{product.amount}</TableCell>
+                }}><Link to={link} style={{cursor: 'pointer'}} >{product?.name}</Link></TableCell>
+                <TableCell align="left" className="text-none">{product?.category}</TableCell>
+                <TableCell align="left" className="text-none">{formatter.format(parseInt(product.price)) }</TableCell>
+                <TableCell align="left" className="text-none">{product.amount}</TableCell>
                 <TableCell align="left" sx ={{
                             color: '#007bff!important',
                             cursor: 'pointer'
                 }}>{product.vendor}</TableCell>
-                <TableCell align="left">{TimeConvert(parseInt(product.arrivalDate))}</TableCell>
+                <TableCell align="left" className="text-none">{TimeConvert(parseInt(product.arrivalDate))}</TableCell>
                 <TableCell align="left">
                     {!check ? (
                     <Button sx={{backgroundColor : '#b18aff'}} variant="contained"

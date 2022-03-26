@@ -1,12 +1,33 @@
 import * as yup from 'yup';
 
 export const ValidationSchema = yup.object({
-  email: yup
+  vendors: yup
     .string()
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
+    .required('Vendor is required'),
+  producttitle: yup
     .string()
-    .min(6, 'Password should be of minimum 6 characters length')
-    .required('Password is required'),
+    .required('Product title is required'),
+  brands: yup
+    .string()
+    .nullable()
+    .required('Brand is required'),
+  condition : yup 
+    .string()
+    .required('Condition is required'),
+  categorys: yup
+    .array()
+    .min(1,'Category title is required')
+    .required('Category title is required'),
+  price : yup
+    .string()
+    .required('Price is required'),
+  stock : yup 
+    .string()
+    .required('Stock is required'),
+  continental : yup 
+    .string()
+    .required('continental is required'),
+  description : yup 
+    .string()
+    .required('Description is required'),
 });

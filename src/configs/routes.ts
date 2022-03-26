@@ -4,6 +4,8 @@ export const ROUTES = {
   login: '/login',
   products : '/pages/products/manage-product',
   createproduct :'/pages/products/new-product',
-  createuser :'/pages/user/new-user',
-  users : '/pages/users/manage-user'
+  createuser :'/pages/users/new-user',
+  users : '/pages/users/manage-user',
+  detailUser :'/pages/users/user-detail/:id',
+  detailProduct : '/pages/products/product-detail/:id'
 };

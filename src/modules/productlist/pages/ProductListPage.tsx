@@ -20,6 +20,7 @@ import SearchFormComponent from '../components/ProductListForm/SearchFormCompone
 import { Link } from 'react-router-dom';
 import '../styles/styleProductPage.css'
 import DeleteForm from '../components/ProductListForm/DeleteForm';
+import { Modal, Spin } from 'antd';
 
 const ProductListPage = () =>{
     const dispatch = useDispatch<ThunkDispatch<AppState,null,Action<String>>>();
@@ -27,28 +28,35 @@ const ProductListPage = () =>{
     const [api,setApi] = React.useState<IApiGetProduct>(initProductState.apigetproduct);
     const [data,setData] = React.useState<Array<IProduct>>([]);
     const [checkReload,setCheckReload] = React.useState(false);
+    const [record,setRecord] = React.useState<string>("");
+    const [loading,setLoading] = React.useState(false);
 
     const fetchUser = useCallback(async () =>{
+        setLoading(true);
         const json = await dispatch(fetchThunk(API_PATHS.productList,'post',api));
         setCheckReload(false);
         if(json.data === false) {
            setData([]);
        } else {
           setData(json.data);
+          setRecord(json.recordsTotal)
           dispatch(setApiGetProduct(api))
        }
+       setLoading(false);
    },[api]);
 
    useEffect(() => {
        fetchUser();
    },[api])
-
     return (
         <div style ={{display : 'flex',backgroundColor :'#1b1b38',width:'100%'}}>
             
         <MenuHeaderComponent />
-        
+        {loading ?  <Modal visible = {true} footer={null} destroyOnClose={true} ><Spin style={{marginLeft : '225px'}}/></Modal> :
         <div style ={{marginTop :'80px'}}>
+           <div style={{ marginLeft:'60px',marginTop :'30px'}}>
+               <h2 style={{color :'white'}}>Products</h2>
+           </div>
            <SearchFormComponent api ={api} setApi ={setApi}/>
            <div style={{ margin:'60px'}}>
                     <div style={{marginBottom : '30px'}}>
@@ -58,19 +66,21 @@ const ProductListPage = () =>{
                         <Paper sx={{ width: '100%', mb: 2 }}>
                             <TableContainer sx={{backgroundColor : '#323259'}}>
                                 <Table sx={{minwidth : 750}}>
-                                <EnhancedTableHead api ={api} setApi ={setApi}/>
+                                <EnhancedTableHead api ={api} setApi ={setApi} data={data}/>
                                 <TableProductComponent data={data} />
                                 </Table>
                             </TableContainer>
                         </Paper>
                     </Box>
                     <div style={{ marginBottom :'10'}}>
-                       <PaginationComponent api ={api} setApi ={setApi} />
+                        
+                       <PaginationComponent api ={api} setApi ={setApi} record={record} />
                     </div>
-                    <DeleteForm api={api} setApi ={setApi} setCheckReload ={setCheckReload} />
+                    
            </div>
-        </div>
-    </div>
+        </div> }
+        <DeleteForm api={api} setApi={setApi} setCheckReload={setCheckReload} />
+    </div>  
     )
 }
 

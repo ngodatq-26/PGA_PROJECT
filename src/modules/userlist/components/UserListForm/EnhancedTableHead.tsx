@@ -1,10 +1,10 @@
-import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material'
+import {  TableCell, TableHead, TableRow } from '@mui/material'
 import React from 'react'
 import { IApiGetUsers } from '../../../../models/user';
 import { headCells } from '../../utils/utils';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-
+import {Checkbox} from 'antd'
 interface Props {
   apiGetUser : IApiGetUsers
   setApiGetUser(a : IApiGetUsers) : void
@@ -24,7 +24,7 @@ const EnhancedTableHead = (props : Props) => {
   return (
     <TableHead>
                 <TableRow>
-                    <TableCell><Checkbox /></TableCell>
+                    <TableCell></TableCell>
                     {
                         headCells.map((HeadCell,index : number) =>(
                             <TableCell key = {index} 

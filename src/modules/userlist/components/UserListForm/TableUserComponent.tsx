@@ -13,7 +13,6 @@ const TableUserComponent = (props : Props) => {
 
   const [deleteList,setDeleteList] = React.useState<Array<IDelete>>([]);
 
-  console.log(deleteList);
   const {data} = props
  
   return (

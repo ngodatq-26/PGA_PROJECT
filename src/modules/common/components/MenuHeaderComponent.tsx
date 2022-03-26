@@ -16,11 +16,15 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { ListItemButton } from '@mui/material';
+import { Collapse, ListItemButton } from '@mui/material';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import '../Styles/styles.css'
+import { Dropdown, Menu } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -98,6 +102,20 @@ const MenuHeaderComponent = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const [openItem, setOpenItem] = React.useState(false);
+
+  const handleClickItem = () => {
+    setOpenItem(!openItem);
+    setOpen(true);
+  };
+
+  const [openItem2, setOpenItem2] = React.useState(false);
+
+  const handleClickItem2 = () => {
+    setOpenItem2(!openItem2);
+    setOpen(true);
+  };
+
   return (
     <Box style={{maxWidth : '100%',display:'flex'}}> 
       {/* appbar header web*/}
@@ -108,6 +126,8 @@ const MenuHeaderComponent = () => {
             aria-label="open drawer"
             onClick={() =>{
                 setOpen(!open)
+                setOpenItem(false)
+                setOpenItem2(false)
             }}
             edge="start"
             sx={{
@@ -124,29 +144,46 @@ const MenuHeaderComponent = () => {
   
        {/*sidebar and list icon item, : products,users*/}
       <Drawer variant="permanent" open={open}>
-        <Divider />
         <List sx ={{ marginTop : '80px' }}  >
-            <ListItem button>
-                <ListItemIcon>
-                    <ProductionQuantityLimitsIcon sx={{color : 'white'}} />
-                </ListItemIcon>
-                <ListItemText primary="Products" />
-                < ArrowDropDownIcon sx={{color : 'white'}}/>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-                <ListItemIcon>
-                    <AssignmentIndIcon sx={{color : 'white'}} />
-                </ListItemIcon>
-                <ListItemText primary="Users" />
-                < ArrowDropDownIcon sx={{color : 'white'}}/>
-            </ListItem>
+          <Divider />
+            <ListItemButton onClick={handleClickItem}>
+              <ListItemIcon>
+                  <ProductionQuantityLimitsIcon sx={{color : 'white'}} />
+              </ListItemIcon>
+              <ListItemText sx={{color : 'white'}} primary="Orders" />
+              {openItem ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openItem} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <Link to="/pages/products/manage-product" style={{color :'white'}}>Products</Link>
+                </ListItemButton>
+              </List>
+            </Collapse>
+          <Divider />
+            <ListItemButton onClick={handleClickItem2}>
+              <ListItemIcon>
+                  <AssignmentIndIcon sx={{color : 'white'}} />
+              </ListItemIcon>
+              <ListItemText sx={{color : 'white'}} primary="User" />
+              {openItem2 ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openItem2} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>       
+                  <Link to="/pages/users/manage-user" style={{color :'white'}}>User list</Link>
+                </ListItemButton>
+              </List>
+            </Collapse>
         </List>
+        <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3,margin : '10px' }}>
       </Box>
     </Box>
   );
 }
+
+
 
 export default React.memo(MenuHeaderComponent);

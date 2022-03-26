@@ -18,10 +18,11 @@ interface PropFormTable {
 
 const TableForm = (propFormTable : PropFormTable) =>{
 
+    const Redux_DeleteList = useSelector((state : AppState) => state.productlist.deletelist);
+    
     const [deleteList,setDeleteList] = React.useState<Array<IDelete>>([]);
 
     const {data}= propFormTable;
-
 
     return (
                      <TableBody>
