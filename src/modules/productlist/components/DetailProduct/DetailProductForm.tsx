@@ -603,11 +603,12 @@ const DetailProductForm = (props : Props) =>{
                 </div>
                 <div>
                          <label>Add to Facebook product feed</label>
-                        <Switch onChange = {handleChangeFacebook} />
+                        {api.facebook === 1 ? <Switch defaultChecked onChange = {handleChangeFacebook} /> : <Switch onChange = {handleChangeFacebook} /> }
                 </div>
                 <div>
                          <label>Add to Google product feed</label>
-                        <Switch onChange = {handleChangeGoogle}/>
+                         { api.google === 1 ?<Switch defaultChecked onChange = {handleChangeGoogle}/> :<Switch onChange = {handleChangeGoogle}/> }
+                        
                 </div>
             </div>
             <div style={{backgroundColor : '#323259' ,height:'50px'}}></div>
