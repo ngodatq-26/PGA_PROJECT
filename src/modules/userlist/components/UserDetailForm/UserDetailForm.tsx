@@ -133,6 +133,10 @@ const CreateUserForm = (props : Props) =>{
         setRoleType(value);
     }
 
+    const handleStatus = (value : any) =>{
+        setStatusComment(value)
+    }
+
     return (
         <Form className ="form-create" >
             <Button type="primary" style ={{marginLeft : '40px',marginTop :'30px'}} shape="circle" > <Link to="/pages/users/manage-user" ><ArrowBackIcon sx={{color:'#fff'}}/></Link></Button>
@@ -242,7 +246,7 @@ const CreateUserForm = (props : Props) =>{
                 </div>
                 <div>
                     <label>Status comment</label>
-                    <div><TextArea rows={4} cols={90} /></div>
+                    <div><TextArea rows={4} cols={90} value={statusComment} onChange={handleStatus}/></div>
                 </div>
                 <div>               
                         <label>Memberships</label>
