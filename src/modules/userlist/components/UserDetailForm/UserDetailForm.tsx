@@ -133,8 +133,8 @@ const CreateUserForm = (props : Props) =>{
         setRoleType(value);
     }
 
-    const handleStatus = (value : any) =>{
-        setStatusComment(value)
+    const handleStatus = (e : any) =>{
+        setStatusComment(e.target.value)
     }
 
     return (
